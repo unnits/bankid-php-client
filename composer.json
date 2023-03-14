@@ -29,7 +29,8 @@
   },
   "require-dev": {
     "phpstan/phpstan": "^0.12.0",
-    "squizlabs/php_codesniffer": "^3.0"
+    "squizlabs/php_codesniffer": "^3.0",
+    "phpunit/phpunit": "^10.0"
   },
   "scripts": {
     "test": "phpunit --bootstrap vendor/autoload.php tests",
@@ -38,4 +39,3 @@
     "phpcbf": "phpcbf --standard=PSR1,PSR12 src"
   }
 }
-
