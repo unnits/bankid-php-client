@@ -1,0 +1,88 @@
+stages:
+  - prebuild
+  - install
+  - test
+
+variables:
+  APP_ENV: "ci"
+  DOCKER_TLS_CERTDIR: ""
+
+php-cli:build:
+  stage: prebuild
+  image: docker:stable
+  services:
+    - docker:dind
+  script:
+    - IMAGE_NAME=$CI_REGISTRY_IMAGE/php-cli:build
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker pull $IMAGE_NAME || true
+    - docker build --cache-from $IMAGE_NAME -t $IMAGE_NAME -f docker/php-cli/build/Dockerfile .
+    - docker push $IMAGE_NAME
+  only:
+    - tags
+    - web
+    - merge_requests
+
+composer:
+  stage: install
+  image: registry.litea.dev:443/unnits/unniparts/bankid-client:build
+  script:
+    - composer --version
+    - composer install -a --no-suggest --no-scripts --prefer-dist
+  artifacts:
+    expire_in: 25 mins
+    paths:
+      - vendor
+  only:
+    - tags
+    - web
+    - merge_requests
+
+phpunit:
+  stage: test
+  image: registry.litea.dev:443/unnits/unniparts/bankid-client:build
+  script:
+    - composer test
+  only:
+    - tags
+    - web
+    - merge_request
+  dependencies:
+    - composer
+
+phpstan:
+  stage: test
+  image: registry.litea.dev:443/unnits/unniparts/bankid-client:build
+  script:
+    - composer run-script phpstan
+  dependencies:
+    - composer
+  only:
+    - tags
+    - web
+    - merge_requests
+
+codesniffer:
+  stage: test
+  image: registry.litea.dev:443/unnits/unniparts/bankid-client:build
+  script:
+    - composer run-script phpcs
+  dependencies:
+    - composer
+  only:
+    - tags
+    - web
+    - merge_requests
+
+security-check:
+  stage: test
+  image:
+    name: dancharousek/local-php-security-checker:v1.0.0
+    entrypoint: [""]
+  script:
+    - local-php-security-checker
+  needs: []
+  only:
+    - tags
+    - web
+    - merge_requests

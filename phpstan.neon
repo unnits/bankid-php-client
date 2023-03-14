@@ -1,0 +1,9 @@
+includes: []
+parameters:
+    paths:
+        - src
+    tmpDir: tmp/phpstan
+    level: 8
+    ignoreErrors: []
+    excludePaths: []
+    checkMissingIterableValueType: true

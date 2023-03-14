@@ -1,0 +1,12 @@
+version: "3"
+services:
+  php-cli:
+    build:
+      context: .
+      dockerfile: docker/php-cli/dev/Dockerfile
+    volumes:
+      - ./:/data
+      - ./docker/php-cli/entrypoint.sh:/entrypoint.sh
+      - composer-data:/.composer
+volumes:
+  composer-data:
