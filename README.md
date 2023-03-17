@@ -9,6 +9,7 @@
 - [Pomocné skripty](#pomocné-skripty)
 - [Testy](#testy)
 - [Upgrade projektu](#plošná-aktualizace-projektu)
+- [Examples](#examples)
 
 ## Instalace projektu
 
@@ -66,3 +67,16 @@ Přepne uživatele do PHP kontejneru, pracovat s Composer nebo Laravel artisanem
 
 Aktualizuje docker image a composer závislosti.
 Vhodné pokud jste na projektu dlouho nepracovali nebo pro hromadnou aktualizaci knihoven.
+
+## Examples
+
+1. Odkomentovat mapovíání portu `80` v souboru `docker-compose.yml`
+
+2. Spustit PHP built-in server
+
+   ```bash
+   make shell
+   php -S 0.0.0.0:80 -t examples
+   ```
+   
+3. Na adrese http://localhost je k dispozici příklad získávání dat o uživateli

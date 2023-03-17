@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: docker/php-cli/dev/Dockerfile
+#    ports:
+#      - "80:80"
     volumes:
       - ./:/data
       - ./docker/php-cli/entrypoint.sh:/entrypoint.sh
