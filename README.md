@@ -72,6 +72,8 @@ Vhodné pokud jste na projektu dlouho nepracovali nebo pro hromadnou aktualizaci
 
 1. Odkomentovat mapovíání portu `80` v souboru `docker-compose.yml`
 
+2. Nakonfigurovat BankId údaje v `examples/index.php`
+
 2. Spustit PHP built-in server
 
    ```bash
