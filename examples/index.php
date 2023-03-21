@@ -8,8 +8,8 @@ require_once '../vendor/autoload.php';
 $baseUri = 'https://oidc.sandbox.bankid.cz';
 $redirectUri = 'http://localhost/api/v1/bankid/callback';
 
-$clientId = '****';
-$clientSecret = '****';
+$clientId = 'dc371349-b63e-4f6e-ba57-2854e0106b51';
+$clientSecret = 'AIFVOH5LYcJplupUT1EJSw4zwVuSAvQql4TnBwMn7Bh3mQN62UBcimdBLTkT_p2ET8lw0rAjgCajzLON_kVVUuU';
 
 $client = new BankIdClient(
     httpClient: new GuzzleClient,
