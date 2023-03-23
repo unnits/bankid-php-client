@@ -38,7 +38,7 @@ class Address
             $data['city'],
             $data['cityarea'],
             $data['zipcode'],
-            $data['country'],
+            strtolower($data['country']),
             $data['ruian_reference'],
         );
     }
