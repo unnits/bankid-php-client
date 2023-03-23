@@ -7,8 +7,8 @@ namespace Unnits\BankId\DTO;
 class PaymentAccount
 {
     public function __construct(
-        public readonly string $iban,
-        public readonly string $currency,
+        public readonly ?string $iban,
+        public readonly ?string $currency,
     ) {
         //
     }
@@ -20,8 +20,8 @@ class PaymentAccount
     public static function create(array $data): self
     {
         return new self(
-            $data['iban'],
-            $data['currency']
+            $data['iban'] ?? null,
+            $data['currency'] ?? null
         );
     }
 }
