@@ -9,25 +9,27 @@ use Unnits\BankId\Enums\Gender;
 class Profile
 {
     /**
-     * @param string $givenName
-     * @param string $familyName
-     * @param Gender $gender
-     * @param int $age
-     * @param string $birthDate
-     * @param string $birthNumber
-     * @param string $birthPlace
-     * @param string $birthCountry
-     * @param string $primaryNationality
-     * @param string[] $nationalities
-     * @param string $maritalStatus
-     * @param string $email
-     * @param string $phoneNumber
-     * @param bool $limitedLegalCapacity
-     * @param Address[] $addresses
-     * @param IdCard[] $idCards
-     * @param string[] $paymentAccounts
-     * @param PaymentAccount[] $paymentAccountsDetails
-     * @param int $updatedAt
+     * @param string|null $givenName
+     * @param string|null $familyName
+     * @param Gender|null $gender
+     * @param int|null $age
+     * @param string|null $birthDate
+     * @param string|null $birthNumber
+     * @param string|null $birthPlace
+     * @param string|null $birthCountry
+     * @param string|null $primaryNationality
+     * @param string[]|null $nationalities
+     * @param string|null $maritalStatus
+     * @param bool|null $majority
+     * @param string|null $email
+     * @param string|null $phoneNumber
+     * @param bool|null $limitedLegalCapacity
+     * @param bool|null $pep
+     * @param Address[]|null $addresses
+     * @param IdCard[]|null $idCards
+     * @param string[]|null $paymentAccounts
+     * @param string[]|null $paymentAccountsDetails
+     * @param int|null $updatedAt
      */
     public function __construct(
         public readonly ?string $givenName,
@@ -41,6 +43,7 @@ class Profile
         public readonly ?string $primaryNationality,
         public readonly ?array $nationalities,
         public readonly ?string $maritalStatus,
+        public readonly ?bool $majority,
         public readonly ?string $email,
         public readonly ?string $phoneNumber,
         public readonly ?bool $limitedLegalCapacity,
@@ -82,6 +85,7 @@ class Profile
             array_key_exists('primary_nationality', $data) ? strtolower($data['primary_nationality']) : null,
             $data['nationalities'] ?? null,
             $data['maritalstatus'] ?? null,
+            $data['majority'] ?? null,
             $data['email'] ?? null,
             $data['phone_number'] ?? null,
             $data['limited_legal_capacity'] ?? null,
