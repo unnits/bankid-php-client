@@ -77,6 +77,11 @@ class Profile
             $data['idcards'] ?? []
         );
 
+        $nationalities = array_map(
+            fn($nationality) => strtolower($nationality),
+            $data['nationalities'] ?? []
+        );
+
         return new self(
             $data['given_name'] ?? null,
             $data['family_name'] ?? null,
@@ -89,7 +94,7 @@ class Profile
             $data['birthplace'] ?? null,
             array_key_exists('birthcountry', $data) ? strtolower($data['birthcountry']) : null,
             array_key_exists('primary_nationality', $data) ? strtolower($data['primary_nationality']) : null,
-            $data['nationalities'] ?? null,
+            $nationalities,
             $data['maritalstatus'] ?? null,
             $data['majority'] ?? null,
             $data['email'] ?? null,
