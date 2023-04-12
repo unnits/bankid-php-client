@@ -11,6 +11,8 @@ class Profile
     /**
      * @param string|null $givenName
      * @param string|null $familyName
+     * @param string|null $titlePrefix
+     * @param string|null $titleSuffix
      * @param Gender|null $gender
      * @param int|null $age
      * @param string|null $birthDate
@@ -34,6 +36,8 @@ class Profile
     public function __construct(
         public readonly ?string $givenName,
         public readonly ?string $familyName,
+        public readonly ?string $titlePrefix,
+        public readonly ?string $titleSuffix,
         public readonly ?Gender $gender,
         public readonly ?int $age,
         public readonly ?string $birthDate,
@@ -76,6 +80,8 @@ class Profile
         return new self(
             $data['given_name'] ?? null,
             $data['family_name'] ?? null,
+            $data['title_prefix'] ?? null,
+            $data['title_suffix'] ?? null,
             array_key_exists('gender', $data) ? Gender::from($data['gender']) : null,
             $data['age'] ?? null,
             $data['birthdate'] ?? null,
