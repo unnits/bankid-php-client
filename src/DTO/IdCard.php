@@ -29,7 +29,7 @@ class IdCard
         return new self(
             array_key_exists('type', $data) ? IdCardType::from(strtolower($data['type'])) : null,
             $data['description'] ?? null,
-            $data['country'] ?? null,
+            array_key_exists('country', $data) ? strtolower($data['country']) : null,
             $data['number'] ?? null,
             $data['valid_to'] ?? null,
             $data['issuer'] ?? null,
