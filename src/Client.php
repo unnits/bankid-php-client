@@ -7,8 +7,10 @@ namespace Unnits\BankId;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
+use RequestObjectCreationResponse;
 use Unnits\BankId\DTO\AuthToken;
 use Unnits\BankId\DTO\Profile;
+use Unnits\BankId\DTO\RequestObject;
 use Unnits\BankId\Exceptions\TokenCreationException;
 
 class Client
@@ -97,5 +99,31 @@ class Client
         );
 
         return Profile::create($content);
+    }
+
+    public function createRequestObject(RequestObject $requestObject)
+    {
+        // 1. podepsat JSON vzniklý z $requestObject
+        // 2. zašifrovat výsledný JSON klíčem z BankId
+
+        $body = json_encode($requestObject);
+
+        $request = new Request(
+            method: 'POST',
+            uri: sprintf('%s/ros', $this->baseUri),
+            headers: [
+                'Content-Type' => 'application/jwe'
+            ],
+            body: $body
+        );
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $content = json_decode(
+            $response->getBody()->getContents(),
+            associative: true
+        );
+
+        return RequestObjectCreationResponse::create($content);
     }
 }
