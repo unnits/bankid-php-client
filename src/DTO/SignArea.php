@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
+use \JsonSerializable;
+
 class SignArea implements JsonSerializable
 {
     public function __construct(
@@ -17,7 +19,7 @@ class SignArea implements JsonSerializable
     }
 
     /**
-     * @return array { 'x-coordinate': int, 'y-coordinate': int, 'x-dist': int, 'y-dist': int }
+     * @return array{'x-coordinate': int, 'y-coordinate': int, 'x-dist': int, 'y-dist': int}
      */
     public function jsonSerialize(): array
     {

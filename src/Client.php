@@ -101,12 +101,13 @@ class Client
         return Profile::create($content);
     }
 
-    public function createRequestObject(RequestObject $requestObject)
+    public function createRequestObject(RequestObject $requestObject): RequestObjectCreationResponse
     {
         // 1. podepsat JSON vzniklý z $requestObject
         // 2. zašifrovat výsledný JSON klíčem z BankId
 
         $body = json_encode($requestObject);
+        assert(is_string($body));
 
         $request = new Request(
             method: 'POST',

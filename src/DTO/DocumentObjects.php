@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
+use \JsonSerializable;
+
 class DocumentObjects implements JsonSerializable
 {
     /**
@@ -17,11 +19,14 @@ class DocumentObjects implements JsonSerializable
         //
     }
 
+    /**
+     * @return array{'envelope_name': string, 'documents': array<int, array<string, mixed>>}
+     */
     public function jsonSerialize(): array
     {
         return [
             'envelope_name' => $this->envelopeName,
-            'documents', array_map(
+            'documents' => array_map(
                 fn (DocumentObject $document) => $document->jsonSerialize(),
                 $this->documents,
             )

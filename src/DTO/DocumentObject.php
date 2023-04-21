@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
+use \DateTime;
+use \JsonSerializable;
 class DocumentObject implements JsonSerializable
 {
     public function __construct(
@@ -25,6 +27,9 @@ class DocumentObject implements JsonSerializable
         //
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

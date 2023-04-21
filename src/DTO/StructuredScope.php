@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
+use \JsonSerializable;
 class StructuredScope implements JsonSerializable
 {
     public function __construct(
@@ -14,12 +15,15 @@ class StructuredScope implements JsonSerializable
         //
     }
 
+    /**
+     * @return array{'signObject': mixed, 'documentObjects': mixed, 'documentObject': mixed}
+     */
     public function jsonSerialize(): array
     {
         return [
             'signObject' => $this->signObject->jsonSerialize(),
-            'documentObjects' => $this->documentObjects->jsonSerialize(),
-            'documentObject' => $this->documentObject->jsonSerialize(),
+            'documentObjects' => $this->documentObjects?->jsonSerialize(),
+            'documentObject' => $this->documentObject?->jsonSerialize(),
         ];
     }
 

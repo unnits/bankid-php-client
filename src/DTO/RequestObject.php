@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
+use \JsonSerializable;
 use Unnits\BankId\Enums\ResponseType;
 use Unnits\BankId\Enums\Scope;
 
@@ -36,6 +37,9 @@ class RequestObject implements JsonSerializable
         //
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [
@@ -65,10 +69,10 @@ class RequestObject implements JsonSerializable
             $data['max_age'],
             $data['bank_id'],
             $data['acr_values'],
-            array_map(
+            array_filter(array_map(
                 fn (string $item) => Scope::tryFrom($item),
                 explode($data['scope'], ' ')
-            ),
+            )),
             $data['response_type'],
             StructuredScope::create($data['structured_scope']),
             $data['txn'],

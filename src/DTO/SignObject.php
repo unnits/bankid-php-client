@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
+use \JsonSerializable;
+
 class SignObject implements JsonSerializable
 {
     /**
@@ -15,6 +17,9 @@ class SignObject implements JsonSerializable
         //
     }
 
+    /**
+     * @return array{'fields': array<int, mixed>}
+     */
     public function jsonSerialize(): array
     {
         return [
