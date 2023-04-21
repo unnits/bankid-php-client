@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
-use \JsonSerializable;
+use JsonSerializable;
 use Unnits\BankId\Enums\ResponseType;
 use Unnits\BankId\Enums\Scope;
 

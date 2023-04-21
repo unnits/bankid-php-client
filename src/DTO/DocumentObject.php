@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
-use \DateTime;
-use \JsonSerializable;
+use DateTime;
+use JsonSerializable;
+
 class DocumentObject implements JsonSerializable
 {
     public function __construct(

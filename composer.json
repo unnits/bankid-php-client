@@ -4,7 +4,12 @@
   "type": "library",
   "require": {
     "php": "^8.1",
-    "psr/http-client": "^1.0"
+    "psr/http-client": "^1.0",
+    "web-token/jwt-signature": "^3.1",
+    "web-token/jwt-encryption": "^3.1",
+    "web-token/jwt-encryption-algorithm-rsa": "^3.1",
+    "web-token/jwt-encryption-algorithm-aescbc": "^3.1",
+    "ext-openssl": "*"
   },
   "authors": [
     {
@@ -16,7 +21,7 @@
       "email": "lenka.kolarova@unnits.com"
     }
   ],
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
     "psr-4": {

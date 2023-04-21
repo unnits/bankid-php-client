@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
-use \JsonSerializable;
+use JsonSerializable;
+
 class StructuredScope implements JsonSerializable
 {
     public function __construct(
