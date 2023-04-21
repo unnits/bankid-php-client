@@ -15,15 +15,15 @@ class DocumentObject implements JsonSerializable
         public readonly string $documentSubject,
         public readonly string $documentLanguage,
         public readonly string $documentId,
-        public readonly int $documentPriority,
         public readonly string $documentAuthor,
         public readonly string $documentHash,
         public readonly bool $documentReadByEndUser,
         public readonly string $hashAlgorithm,
         public readonly DateTime $documentCreatedAt,
         public readonly SignArea $signArea,
-        public readonly string $signField,
         public readonly string $documentUri,
+        public readonly ?int $documentPriority = null,
+        public readonly ?string $signField = null,
     ) {
         //
     }
@@ -63,15 +63,15 @@ class DocumentObject implements JsonSerializable
             $data['document_subject'],
             $data['document_language'],
             $data['document_id'],
-            $data['document_priority'],
             $data['document_author'],
             $data['document_hash'],
             $data['document_read_by_enduser'],
             $data['hash_alg'],
             new DateTime($data['document_created']),
             SignArea::create($data['sign_area']),
-            $data['sign_field'],
             $data['document_uri'],
+            $data['document_priority'] ?? null,
+            $data['sign_field'] ?? null,
         );
     }
 }

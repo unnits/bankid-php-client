@@ -9,7 +9,7 @@ use JsonSerializable;
 class StructuredScope implements JsonSerializable
 {
     public function __construct(
-        public readonly SignObject $signObject,
+        public readonly ?SignObject $signObject = null,
         public readonly ?DocumentObjects $documentObjects = null,
         public readonly ?DocumentObject $documentObject = null,
     ) {
@@ -22,7 +22,7 @@ class StructuredScope implements JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'signObject' => $this->signObject->jsonSerialize(),
+            'signObject' => $this->signObject?->jsonSerialize(),
             'documentObjects' => $this->documentObjects?->jsonSerialize(),
             'documentObject' => $this->documentObject?->jsonSerialize(),
         ];
@@ -35,7 +35,9 @@ class StructuredScope implements JsonSerializable
     public static function create(array $data): self
     {
         return new self(
-            SignObject::create($data['signObject']),
+            array_key_exists('signObject', $data)
+                ? SignObject::create($data['signObject'])
+                : null,
             array_key_exists('documentObjects', $data)
                 ? DocumentObjects::create($data['documentObjects'])
                 : null,
