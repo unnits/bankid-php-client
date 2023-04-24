@@ -47,3 +47,6 @@ security-check:
 
 configure: cmd.sh
 	./cmd.sh configure
+
+serve: up
+	./cmd.sh dc exec -u $(UID) php-cli php -S 0.0.0.0:80 -t examples

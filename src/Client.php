@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Unnits\BankId;
 
+use Exception;
 use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\JWK;
 use Jose\Component\Encryption\Algorithm\ContentEncryption\A128CBCHS256;
@@ -11,16 +12,18 @@ use Jose\Component\Encryption\Algorithm\KeyEncryption\RSAOAEP256;
 use Jose\Component\Encryption\Compression\CompressionMethodManager;
 use Jose\Component\Encryption\JWEBuilder;
 use Jose\Component\Encryption\Serializer\CompactSerializer;
+use OpenSSLAsymmetricKey;
 use RuntimeException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
-use RequestObjectCreationResponse;
 use Unnits\BankId\DTO\AuthToken;
 use Unnits\BankId\DTO\JsonWebKey;
 use Unnits\BankId\DTO\JsonWebKeySet;
 use Unnits\BankId\DTO\Profile;
 use Unnits\BankId\DTO\RequestObject;
+use Unnits\BankId\DTO\RequestObjectCreationResponse;
+use Unnits\BankId\Enums\Scope;
 use Unnits\BankId\Exceptions\TokenCreationException;
 
 class Client
@@ -35,13 +38,20 @@ class Client
         //
     }
 
-    public function getAuthUri(string $state, ?string $requestUri = null): AuthorizationUri
+    /**
+     * @param string $state
+     * @param string|null $requestUri
+     * @param Scope[] $scopes
+     * @return AuthorizationUri
+     */
+    public function getAuthUri(string $state, ?string $requestUri = null, array $scopes = []): AuthorizationUri
     {
         return new AuthorizationUri(
             baseUri: $this->baseUri,
             clientId: $this->clientId,
             redirectUri: $this->redirectUri,
             state: $state,
+            scopes: $scopes,
             requestUri: $requestUri,
         );
     }
@@ -114,13 +124,14 @@ class Client
 
     /**
      * @param RequestObject $requestObject
-     * @param JsonWebKey $applicationSignatureKey
+     * @param OpenSSLAsymmetricKey $applicationSignatureKey
      * @return RequestObjectCreationResponse
      * @throws ClientExceptionInterface
+     * @throws Exception
      */
     public function createRequestObject(
         RequestObject $requestObject,
-        JsonWebKey $applicationSignatureKey
+        OpenSSLAsymmetricKey $applicationSignatureKey
     ): RequestObjectCreationResponse {
         // 1. podepsat JSON vzniklý z $requestObject
         // 2. zašifrovat výsledný JSON klíčem z BankId
@@ -157,6 +168,10 @@ class Client
         return RequestObjectCreationResponse::create($content);
     }
 
+    /**
+     * @return JsonWebKeySet
+     * @throws ClientExceptionInterface
+     */
     public function getBankIdJWKSet(): JsonWebKeySet
     {
         $request = new Request(
@@ -177,10 +192,10 @@ class Client
     /**
      * @see https://datatracker.ietf.org/doc/html/rfc7515
      * @param string $data
-     * @param JsonWebKey $privateKey
+     * @param OpenSSLAsymmetricKey $privateKey
      * @return string
      */
-    private function signUsingJsonWebSignature(string $data, JsonWebKey $privateKey): string
+    private function signUsingJsonWebSignature(string $data, OpenSSLAsymmetricKey $privateKey): string
     {
         $header = json_encode([
             'alg' => 'HS256',
@@ -199,7 +214,7 @@ class Client
             !openssl_sign(
                 $message,
                 $signature,
-                $privateKey->chain[0],
+                $privateKey,
                 OPENSSL_ALGO_SHA256,
             )
         ) {
@@ -223,19 +238,28 @@ class Client
      */
     private function encryptUsingJsonWebEncryption(string $data, JsonWebKey $publicKey): string
     {
+        $keyEncryptionAlgorithm = new RSAOAEP256();
+        $contentEncryptionAlgorithm = new A128CBCHS256();
+
         $jweBuilder = new JWEBuilder(
-            keyEncryptionAlgorithmManager: new AlgorithmManager([new RSAOAEP256()]),
-            contentEncryptionAlgorithmManager: new AlgorithmManager([new A128CBCHS256()]),
+            keyEncryptionAlgorithmManager: new AlgorithmManager([$keyEncryptionAlgorithm]),
+            contentEncryptionAlgorithmManager: new AlgorithmManager([$contentEncryptionAlgorithm]),
             compressionManager: new CompressionMethodManager()
         );
 
         $jwk = new JWK([
-            'kty' => $publicKey->type->value,
+            'kty' => strtoupper($publicKey->type->value),
             'x5c' => $publicKey->chain,
+            'n' => $publicKey->nModulus,
+            'e' => $publicKey->publicExponent,
         ]);
 
         $jwe = $jweBuilder->create()
             ->withPayload($data)
+            ->withSharedProtectedHeader([
+                'enc' => $contentEncryptionAlgorithm->name(),
+                'alg' => $keyEncryptionAlgorithm->name(),
+            ])
             ->addRecipient($jwk)
             ->build();
 

@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+namespace Unnits\BankId\DTO;
+
+use DateTime;
+use Exception;
+
 class RequestObjectCreationResponse
 {
     /**
@@ -22,6 +27,7 @@ class RequestObjectCreationResponse
     /**
      * @param array<string, mixed> $data
      * @return self
+     * @throws Exception
      */
     public static function create(array $data): self
     {

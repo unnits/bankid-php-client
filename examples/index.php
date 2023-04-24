@@ -1,66 +1,30 @@
 <?php
 
-use Unnits\BankId\Client as BankIdClient;
-use GuzzleHttp\Client as GuzzleClient;
+use Dotenv\Dotenv;
 
 require_once '../vendor/autoload.php';
 
-$baseUri = 'https://oidc.sandbox.bankid.cz';
-$redirectUri = 'http://localhost/api/v1/bankid/callback';
-
-$clientId = '*****';
-$clientSecret = '*****';
-
-$client = new BankIdClient(
-    httpClient: new GuzzleClient,
-    baseUri: $baseUri,
-    clientId: $clientId,
-    clientSecret: $clientSecret,
-    redirectUri: $redirectUri,
-);
-
-//
-
-$uri = $_SERVER['REQUEST_URI'];
-$path = parse_url($uri, PHP_URL_PATH);
-
-$profile = null;
-
-if ($path === parse_url($redirectUri, PHP_URL_PATH)) {
-    $code = $_GET['code'] ?? null;
-    $state = $_GET['state'] ?? null;
-
-    $token = $client->getToken($code);
-    $profile = $client->getProfile($token);
+function dd(...$vars): never
+{
+    var_dump(...$vars);
+    exit;
 }
 
-//
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
-$state = '1234';
-$link = (string)$client->getAuthUri($state);
+$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>BankId example</title>
-</head>
+$view = match($path) {
+    '/' => 'home.php',
+    '/get-user-information', '/api/v1/contracts/contract-fields' => 'get_profile.php',
+    '/sign-document' => 'sign_document.php',
+    default => null,
+};
 
-<body>
-    <?php if ($profile === null): ?>
-        <a href="<?= $link ?>">
-            Předvyplnit pomocí BankId
-            (<?= $link ?>)
-        </a>
-    <?php else: ?>
-        <ul>
-            <li>Jméno: <?= $profile->givenName ?></li>
-            <li>Příjmení: <?= $profile->familyName ?></li>
-            <li>Věk: <?= $profile->age ?></li>
-            <li>Místo narození: <?= $profile->birthPlace ?></li>
-            <li>...</li>
-        </ul>
-    <?php endif; ?>
-</body>
-</html>
+if ($view === null) {
+    echo '404 not found';
+    exit;
+}
+
+require_once sprintf('views/%s', $view);

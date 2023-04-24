@@ -5,10 +5,10 @@ services:
       context: .
       dockerfile: docker/php-cli/dev/Dockerfile
 #    ports:
-#      - "80:80"
+#      - "8000:80"
     volumes:
       - ./:/data
-      - ./docker/php-cli/entrypoint.sh:/entrypoint.sh
+      - ./docker/php-cli/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
       - composer-data:/.composer
 volumes:
   composer-data:

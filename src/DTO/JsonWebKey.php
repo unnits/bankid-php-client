@@ -18,11 +18,15 @@ class JsonWebKey
      * @param JsonWebKeyType $type
      * @param JsonWebKeyUsage $usage
      * @param string[] $chain
+     * @param string|null $nModulus
+     * @param string|null $publicExponent
      */
     public function __construct(
         public readonly JsonWebKeyType $type,
         public readonly JsonWebKeyUsage $usage,
         public readonly array $chain,
+        public readonly ?string $nModulus,
+        public readonly ?string $publicExponent,
     ) {
         //
     }
@@ -35,8 +39,10 @@ class JsonWebKey
     {
         return new self(
             JsonWebKeyType::from(strtolower($data['kty'])),
-            JsonWebKeyUsage::from(strtolower($data['use'])),
-            $data['x5c']
+            JsonWebKeyUsage::from(strtolower($data['use'] ?? 'unknown')),
+            $data['x5c'],
+            $data['n'] ?? null,
+            $data['e'] ?? null,
         );
     }
 }

@@ -25,10 +25,10 @@ class JsonWebKeySet
      */
     public function getEncryptionKeys(): array
     {
-        return array_filter(
+        return array_values(array_filter(
             $this->keys,
             fn (JsonWebKey $key) => $key->usage === JsonWebKeyUsage::Encryption
-        );
+        ));
     }
 
     /**
