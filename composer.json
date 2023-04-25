@@ -10,7 +10,9 @@
     "web-token/jwt-encryption-algorithm-rsa": "^3.1",
     "web-token/jwt-encryption-algorithm-aescbc": "^3.1",
     "ext-openssl": "*",
-    "ext-bcmath": "*"
+    "ext-bcmath": "*",
+    "web-token/jwt-signature-algorithm-rsa": "^3.1",
+    "web-token/jwt-key-mgmt": "^3.1"
   },
   "authors": [
     {

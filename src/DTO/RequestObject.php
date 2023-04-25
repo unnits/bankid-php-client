@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
+use Exception;
 use JsonSerializable;
 use Unnits\BankId\Enums\ResponseType;
 use Unnits\BankId\Enums\Scope;
@@ -12,7 +13,6 @@ class RequestObject implements JsonSerializable
 {
     /**
      * @param int $maxAge
-     * @param string $bankId
      * @param string $acrValues
      * @param Scope[] $scopes
      * @param ResponseType $responseType
@@ -21,10 +21,10 @@ class RequestObject implements JsonSerializable
      * @param string $state
      * @param string $nonce
      * @param string $clientId
+     * @param string|null $bankId
      */
     public function __construct(
         public readonly int $maxAge,
-        public readonly string $bankId,
         public readonly string $acrValues,
         public readonly array $scopes,
         public readonly ResponseType $responseType,
@@ -33,6 +33,7 @@ class RequestObject implements JsonSerializable
         public readonly string $state,
         public readonly string $nonce,
         public readonly string $clientId,
+        public readonly ?string $bankId = null,
     ) {
         //
     }
@@ -42,7 +43,7 @@ class RequestObject implements JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        return [
+        $json = [
             'max_age' => $this->maxAge,
             'bank_id' => $this->bankId,
             'acr_values' => $this->acrValues,
@@ -57,28 +58,35 @@ class RequestObject implements JsonSerializable
             'nonce' => $this->nonce,
             'client_id' => $this->clientId,
         ];
+
+        if ($this->bankId !== null) {
+            $json['bank_id'] = $this->bankId;
+        }
+
+        return $json;
     }
 
     /**
      * @param array<string, mixed> $data
      * @return self
+     * @throws Exception
      */
     public static function create(array $data): self
     {
         return new self(
-            $data['max_age'],
-            $data['bank_id'],
-            $data['acr_values'],
-            array_filter(array_map(
+            maxAge: $data['max_age'],
+            acrValues: $data['acr_values'],
+            scopes: array_filter(array_map(
                 fn (string $item) => Scope::tryFrom($item),
                 explode($data['scope'], ' ')
             )),
-            $data['response_type'],
-            StructuredScope::create($data['structured_scope']),
-            $data['txn'],
-            $data['state'],
-            $data['nonce'],
-            $data['client_id'],
+            responseType: $data['response_type'],
+            structuredScope: StructuredScope::create($data['structured_scope']),
+            txn: $data['txn'],
+            state: $data['state'],
+            nonce: $data['nonce'],
+            clientId: $data['client_id'],
+            bankId: $data['bank_id'],
         );
     }
 }

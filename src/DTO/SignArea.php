@@ -28,6 +28,7 @@ class SignArea implements JsonSerializable
             'y-coordinate' => $this->y,
             'x-dist' => $this->width,
             'y-dist' => $this->height,
+            'page' => $this->page,
         ];
     }
 

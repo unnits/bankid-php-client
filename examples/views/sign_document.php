@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Utils;
+use GuzzleHttp\RequestOptions;
+use Jose\Component\KeyManagement\JWKFactory;
 use Unnits\BankId\Client as BankIdClient;
 use GuzzleHttp\Client as GuzzleClient;
 use Unnits\BankId\DTO\DocumentObject;
@@ -13,7 +16,10 @@ use Unnits\BankId\Enums\AcrValue;
 use Unnits\BankId\Enums\ResponseType;
 use Unnits\BankId\Enums\Scope;
 
-$redirectUri = 'http://localhost/api/v1/bankid/callback';
+/**
+ * Must match one of the Redirect URIs in BankId's developer portal
+ */
+$redirectUri = 'http://localhost:8000/api/v1/contracts/contract-fields';
 
 $httpClient = new GuzzleClient();
 
@@ -28,26 +34,20 @@ $client = new BankIdClient(
 $profile = null;
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-$keyPath = __DIR__ . '/../storage/private-key.pem';
-$keyContent = file_get_contents($keyPath);
+// Move your demo .pdf file into the documentPath
+$documentPath = __DIR__ . '/../storage/template.pdf';
 
-assert(is_string($keyContent));
+$documentSize = filesize($documentPath);
+assert(is_int($documentSize));
 
-$privateKey = openssl_pkey_get_private($keyContent);
+$documentHash = hash_file('sha512', $documentPath);
+assert(is_string($documentHash));
 
-assert($privateKey instanceof OpenSSLAsymmetricKey);
+// 1. first we create new request object providing document's metadata
 
-$documentUri = $_ENV['DEMO_DOCUMENT_URI'];
-
-$tmpFile = tempnam('/tmp', '');
-assert(is_string($tmpFile));
-
-$response = $httpClient->get($documentUri, [
-    'sink' => $tmpFile
-]);
-
-$documentSize = filesize($tmpFile);
-$documentHash = hash_file('sha512', $tmpFile);
+// Must match the .pdf's creation date
+// (not the file itself, but created_at metadata in the pdf file)
+$documentCreatedAt = new DateTime('2022-07-01 20:50:07.000000');
 
 $ros = new RequestObject(
     maxAge: 3600,
@@ -62,35 +62,61 @@ $ros = new RequestObject(
     responseType: ResponseType::Code,
     structuredScope: new StructuredScope(
         documentObject: new DocumentObject(
-            documentTitle: 'Document for signature',
             documentSize: $documentSize,
-            documentSubject: 'New contract',
             documentLanguage: 'cs.CZ',
             documentId: 'loremipsum',
-            documentAuthor: 'John Doe',
             documentHash: $documentHash,
             documentReadByEndUser: true,
             hashAlgorithm: '2.16.840.1.101.3.4.2.3',
-            documentCreatedAt: new DateTime(),
+            documentCreatedAt: $documentCreatedAt,
             signArea: new SignArea(
                 x: 320,
                 y: 400,
                 width: 140,
                 height: 40,
                 page: 0,
-            ),
-            documentUri: $documentUri
-        )
+            )
+        ),
     ),
     txn: '9123203d-f2e3-4dd9-a11d-eb486ff353f9',
     state: 'H4YMSE8zcLS-xXLR7ZZ-toUcrYGeMLBLB9BbCtAo-2o',
     nonce: '1jZ2YXn0kAa0Jfnn7Fig8Gz-wc_GBaQgDVzYtdXTkmI',
-    clientId: 'd0cba9e6-ffff-487c-ffff-56395480c342',
+    clientId: $_ENV['DEMO_CLIENT_ID'],
 );
 
-$response = $client->createRequestObject($ros, $privateKey);
 
-dd($response);
+$keyPath = __DIR__ . '/../storage/private-key.pem';
+$privateKey = JWKFactory::createFromKeyFile($keyPath);
+
+$response = $client->createRequestObject($ros, $privateKey);
+$requestUri = $response->requestUri;
+
+$uploadUri = $response->uploadUri;
+assert(is_string($uploadUri));
+
+$authUri = null;
+
+// 2. now we upload the file itself
+try {
+    $httpClient->request(
+        method: 'POST',
+        uri: $uploadUri,
+        options: [
+            RequestOptions::MULTIPART => [
+                ['name' => 'file', 'contents' => Utils::tryFopen($documentPath, 'r')]
+            ],
+        ]
+    );
+
+    $authUri = $client->getAuthUri(
+        state: '1234',
+        requestUri: $requestUri,
+        scopes: [Scope::OpenId]
+    );
+
+} catch (GuzzleException $e) {
+    //
+}
 
 ?>
 <!DOCTYPE html>
@@ -102,5 +128,7 @@ dd($response);
 
 <body>
     Podpis dokumentů
+
+    <a href="<?= $authUri ?>">Podepsat</a>
 </body>
 </html>

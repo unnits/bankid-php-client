@@ -13,7 +13,7 @@ class RequestObjectCreationResponse
      * @param DateTime $expiresAt
      * @param string $requestUri
      * @param string|null $uploadUri
-     * @param string[]|null $uploadUris
+     * @param array<string, string>|null $uploadUris Maps documentId to its upload URI
      */
     public function __construct(
         public readonly DateTime $expiresAt,
@@ -32,10 +32,10 @@ class RequestObjectCreationResponse
     public static function create(array $data): self
     {
         return new self(
-            new DateTime($data['exp']),
+            new DateTime(sprintf('@%d', $data['exp'])),
             $data['request_uri'],
-            $data['uploadUri'] ?? null,
-            $data['uploadUris'] ?? null,
+            $data['upload_uri'] ?? null,
+            $data['upload_uris'] ?? null,
         );
     }
 }

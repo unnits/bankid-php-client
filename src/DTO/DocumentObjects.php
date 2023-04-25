@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
+use Exception;
 use JsonSerializable;
 
 class DocumentObjects implements JsonSerializable
@@ -36,6 +37,7 @@ class DocumentObjects implements JsonSerializable
     /**
      * @param array<string, mixed> $data
      * @return self
+     * @throws Exception
      */
     public static function create(array $data): self
     {

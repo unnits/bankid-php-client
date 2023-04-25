@@ -7,23 +7,27 @@ namespace Unnits\BankId;
 use Exception;
 use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\JWK;
+use Jose\Component\Core\JWKSet;
 use Jose\Component\Encryption\Algorithm\ContentEncryption\A128CBCHS256;
 use Jose\Component\Encryption\Algorithm\KeyEncryption\RSAOAEP256;
 use Jose\Component\Encryption\Compression\CompressionMethodManager;
 use Jose\Component\Encryption\JWEBuilder;
 use Jose\Component\Encryption\Serializer\CompactSerializer;
-use OpenSSLAsymmetricKey;
+use Jose\Component\Signature\Algorithm\RS256;
+use Jose\Component\Signature\JWSBuilder;
+use Jose\Component\Signature\Serializer\CompactSerializer as SignatureCompactSerializer;
+use JsonException;
 use RuntimeException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Unnits\BankId\DTO\AuthToken;
-use Unnits\BankId\DTO\JsonWebKey;
-use Unnits\BankId\DTO\JsonWebKeySet;
 use Unnits\BankId\DTO\Profile;
 use Unnits\BankId\DTO\RequestObject;
 use Unnits\BankId\DTO\RequestObjectCreationResponse;
+use Unnits\BankId\Enums\JsonWebKeyUsage;
 use Unnits\BankId\Enums\Scope;
+use Unnits\BankId\Exceptions\RequestObjectCreationException;
 use Unnits\BankId\Exceptions\TokenCreationException;
 
 class Client
@@ -124,14 +128,14 @@ class Client
 
     /**
      * @param RequestObject $requestObject
-     * @param OpenSSLAsymmetricKey $applicationSignatureKey
+     * @param JWK $applicationSignatureKey
      * @return RequestObjectCreationResponse
      * @throws ClientExceptionInterface
      * @throws Exception
      */
     public function createRequestObject(
         RequestObject $requestObject,
-        OpenSSLAsymmetricKey $applicationSignatureKey
+        JWK $applicationSignatureKey
     ): RequestObjectCreationResponse {
         // 1. podepsat JSON vzniklý z $requestObject
         // 2. zašifrovat výsledný JSON klíčem z BankId
@@ -140,14 +144,14 @@ class Client
         assert(is_string($body));
 
         $jwkSet = $this->getBankIdJWKSet();
-        $encryptionKeys = $jwkSet->getEncryptionKeys();
+        $encryptionKey = $jwkSet->selectKey(JsonWebKeyUsage::Encryption->value);
 
-        if (count($encryptionKeys) === 0) {
+        if ($encryptionKey === null) {
             throw new RuntimeException('Could not find any BankId JWKs to encrypt content with.');
         }
 
         $signedContent = $this->signUsingJsonWebSignature($body, $applicationSignatureKey);
-        $encryptedContent = $this->encryptUsingJsonWebEncryption($signedContent, $encryptionKeys[0]);
+        $encryptedContent = $this->encryptUsingJsonWebEncryption($signedContent, $encryptionKey);
 
         $request = new Request(
             method: 'POST',
@@ -159,6 +163,15 @@ class Client
         );
 
         $response = $this->httpClient->sendRequest($request);
+        $code = $response->getStatusCode();
+
+        if ($code !== 200) {
+            throw new RequestObjectCreationException(sprintf(
+                'ROS creation request failed with status %d and message %s',
+                $code,
+                $response->getBody(),
+            ));
+        }
 
         $content = json_decode(
             $response->getBody()->getContents(),
@@ -169,74 +182,56 @@ class Client
     }
 
     /**
-     * @return JsonWebKeySet
+     * @return JWKSet
      * @throws ClientExceptionInterface
+     * @throws JsonException
      */
-    public function getBankIdJWKSet(): JsonWebKeySet
+    public function getBankIdJWKSet(): JWKSet
     {
         $request = new Request(
             method: 'GET',
             uri: sprintf('%s/.well-known/jwks', $this->baseUri)
         );
 
-        $response = $this->httpClient->sendRequest($request);
-
-        $content = json_decode(
-            $response->getBody()->getContents(),
-            associative: true
+        return JWKSet::createFromJson(
+            $this->httpClient
+                ->sendRequest($request)
+                ->getBody()
+                ->getContents()
         );
-
-        return JsonWebKeySet::create($content);
     }
 
     /**
      * @see https://datatracker.ietf.org/doc/html/rfc7515
      * @param string $data
-     * @param OpenSSLAsymmetricKey $privateKey
+     * @param JWK $privateKey
      * @return string
      */
-    private function signUsingJsonWebSignature(string $data, OpenSSLAsymmetricKey $privateKey): string
+    private function signUsingJsonWebSignature(string $data, JWK $privateKey): string
     {
-        $header = json_encode([
-            'alg' => 'HS256',
-        ]);
+        $algorithm = new RS256();
 
-        assert(is_string($header));
+        $jwsBuilder = new JWSBuilder(new AlgorithmManager([
+            $algorithm
+        ]));
 
-        $b64EncodedHeader = base64_encode($header);
-        $b64EncodedData = base64_encode($data);
+        $jws = $jwsBuilder->create()
+            ->withPayload($data)
+            ->addSignature($privateKey, ['alg' => $algorithm->name()])
+            ->build();
 
-        $message = sprintf('%s.%s', $b64EncodedHeader, $b64EncodedData);
-
-        $signature = '';
-
-        if (
-            !openssl_sign(
-                $message,
-                $signature,
-                $privateKey,
-                OPENSSL_ALGO_SHA256,
-            )
-        ) {
-            throw new RuntimeException('Openssl signature failed.');
-        };
-
-        return sprintf(
-            '%s.%s.%s',
-            $b64EncodedHeader,
-            $b64EncodedData,
-            base64_encode($signature)
-        );
+        return (new SignatureCompactSerializer())
+            ->serialize($jws, signatureIndex: 0);
     }
 
     /**
      * @see https://datatracker.ietf.org/doc/html/rfc7516
      * @see https://web-token.spomky-labs.com/v/v1.x/components/encrypted-tokens-jwe/jwe-creation
      * @param string $data
-     * @param JsonWebKey $publicKey
+     * @param JWK $publicKey
      * @return string
      */
-    private function encryptUsingJsonWebEncryption(string $data, JsonWebKey $publicKey): string
+    private function encryptUsingJsonWebEncryption(string $data, JWK $publicKey): string
     {
         $keyEncryptionAlgorithm = new RSAOAEP256();
         $contentEncryptionAlgorithm = new A128CBCHS256();
@@ -247,20 +242,14 @@ class Client
             compressionManager: new CompressionMethodManager()
         );
 
-        $jwk = new JWK([
-            'kty' => strtoupper($publicKey->type->value),
-            'x5c' => $publicKey->chain,
-            'n' => $publicKey->nModulus,
-            'e' => $publicKey->publicExponent,
-        ]);
-
         $jwe = $jweBuilder->create()
             ->withPayload($data)
             ->withSharedProtectedHeader([
+                'kid' => $publicKey->get('kid'),
                 'enc' => $contentEncryptionAlgorithm->name(),
                 'alg' => $keyEncryptionAlgorithm->name(),
             ])
-            ->addRecipient($jwk)
+            ->addRecipient($publicKey)
             ->build();
 
         return (new CompactSerializer())
