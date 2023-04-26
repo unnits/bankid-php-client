@@ -49,13 +49,13 @@ class StructuredScope implements JsonSerializable
     public static function create(array $data): self
     {
         return new self(
-            array_key_exists('signObject', $data)
+            array_key_exists('signObject', $data) && is_array($data['signObject'])
                 ? SignObject::create($data['signObject'])
                 : null,
-            array_key_exists('documentObjects', $data)
+            array_key_exists('documentObjects', $data) && is_array($data['documentObjects'])
                 ? DocumentObjects::create($data['documentObjects'])
                 : null,
-            array_key_exists('documentObject', $data)
+            array_key_exists('documentObject', $data) && is_array($data['documentObject'])
                 ? DocumentObject::create($data['documentObject'])
                 : null
         );

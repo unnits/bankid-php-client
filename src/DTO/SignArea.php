@@ -41,8 +41,8 @@ class SignArea implements JsonSerializable
         return new self(
             $data['x-coordinate'],
             $data['y-coordinate'],
-            $data['x-distance'],
-            $data['y-distance'],
+            $data['x-dist'],
+            $data['y-dist'],
             $data['page'],
         );
     }

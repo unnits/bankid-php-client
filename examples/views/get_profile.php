@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+use Jose\Component\Signature\Serializer\CompactSerializer;
+use Jose\Component\Signature\Serializer\JWSSerializerManager;
 use Unnits\BankId\Client as BankIdClient;
 use GuzzleHttp\Client as GuzzleClient;
+use Unnits\BankId\DTO\IdentityToken;
 use Unnits\BankId\Enums\Scope;
 
 /**
@@ -14,8 +17,8 @@ $redirectUri = 'http://localhost:8000/api/v1/contracts/contract-fields';
 $client = new BankIdClient(
     httpClient: new GuzzleClient,
     baseUri: $_ENV['BANK_ID_URI'],
-    clientId: $_ENV['CLIENT_ID'],
-    clientSecret: $_ENV['CLIENT_SECRET'],
+    clientId: $_ENV['DEMO_CLIENT_ID'],
+    clientSecret: $_ENV['DEMO_CLIENT_SECRET'],
     redirectUri: $redirectUri
 );
 
@@ -28,6 +31,19 @@ if ($path === parse_url($redirectUri, PHP_URL_PATH)) {
 
     $token = $client->getToken($code);
     $profile = $client->getProfile($token);
+
+    $serializerManager = new JWSSerializerManager([
+        new CompactSerializer()
+    ]);
+
+    $jwt = $serializerManager->unserialize($token->tokenId);
+    $payload = json_decode($jwt->getPayload() ?? '', associative: true);
+
+    assert(is_array($payload));
+
+    $identityToken = IdentityToken::create($payload);
+
+    dd($identityToken);
 }
 
 $state = '1234';

@@ -51,7 +51,6 @@ $documentCreatedAt = new DateTime('2022-07-01 20:50:07.000000');
 
 $ros = new RequestObject(
     maxAge: 3600,
-    bankId: '29a0cec1-8e0f-4a1f-b0ce-92264b9922e8',
     acrValues: AcrValue::LOA3->value,
     scopes: [
         Scope::OpenId,
@@ -113,7 +112,6 @@ try {
         requestUri: $requestUri,
         scopes: [Scope::OpenId]
     );
-
 } catch (GuzzleException $e) {
     //
 }

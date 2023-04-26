@@ -8,4 +8,5 @@ enum AcrValue: string
 {
     case LOA2 = 'loa2';
     case LOA3 = 'loa3';
+    case ACR1 = '1';
 }
