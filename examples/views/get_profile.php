@@ -2,11 +2,8 @@
 
 declare(strict_types=1);
 
-use Jose\Component\Signature\Serializer\CompactSerializer;
-use Jose\Component\Signature\Serializer\JWSSerializerManager;
 use Unnits\BankId\Client as BankIdClient;
 use GuzzleHttp\Client as GuzzleClient;
-use Unnits\BankId\DTO\IdentityToken;
 use Unnits\BankId\Enums\Scope;
 
 /**
@@ -31,8 +28,6 @@ if ($path === parse_url($redirectUri, PHP_URL_PATH)) {
 
     $token = $client->getToken($code);
     $profile = $client->getProfile($token);
-
-    dd($token->identityToken);
 }
 
 $state = '1234';
@@ -62,6 +57,10 @@ $link = (string)$client->getAuthUri($state, scopes: [
         <li>Věk: <?= $profile->age ?></li>
         <li>Místo narození: <?= $profile->birthPlace ?></li>
         <li>...</li>
+
+        <?php if (isset($token)): ?>
+            <li><?= $token->identityToken->structuredScope->documentObject->documentUri ?? '' ?></li>
+        <?php endif; ?>
     </ul>
 <?php endif; ?>
 </body>

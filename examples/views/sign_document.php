@@ -31,9 +31,6 @@ $client = new BankIdClient(
     redirectUri: $redirectUri,
 );
 
-$profile = null;
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-
 // Move your demo .pdf file into the documentPath
 $documentPath = __DIR__ . '/../storage/template.pdf';
 
@@ -47,7 +44,7 @@ assert(is_string($documentHash));
 
 // Must match the .pdf's creation date
 // (not the file itself, but created_at metadata in the pdf file)
-$documentCreatedAt = new DateTime('2022-07-01 20:50:07.000000');
+$documentCreatedAt = new DateTime($_ENV['DEMO_DOCUMENT_CREATED_AT']);
 
 $ros = new RequestObject(
     maxAge: 3600,

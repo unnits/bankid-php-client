@@ -4,12 +4,6 @@ use Dotenv\Dotenv;
 
 require_once '../vendor/autoload.php';
 
-function dd(...$vars): never
-{
-    var_dump(...$vars);
-    exit;
-}
-
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
