@@ -65,21 +65,33 @@ class DocumentObject implements JsonSerializable
      */
     public static function create(array $data): self
     {
+        $signArea = $data['sign_area'];
+        assert(is_array($signArea));
+
+
+        $signField = array_key_exists('sign_field', $data)
+            ? strval($data['sign_field'])
+            : null;
+
+        $documentPriority = array_key_exists('document_priority', $data)
+            ? intval($data['document_priority'])
+            : null;
+
         return new self(
-            documentSize: $data['document_size'],
-            documentLanguage: $data['document_language'],
-            documentId: $data['document_id'],
-            documentHash: $data['document_hash'],
-            documentReadByEndUser: $data['document_read_by_enduser'],
-            hashAlgorithm: $data['hash_alg'],
-            documentCreatedAt: new DateTime($data['document_created']),
-            signArea: SignArea::create($data['sign_area']),
-            documentTitle: $data['document_title'],
-            documentSubject: $data['document_subject'],
-            documentAuthor: $data['document_author'],
-            documentUri: $data['document_uri'],
-            documentPriority: $data['document_priority'] ?? null,
-            signField: $data['sign_field'] ?? null,
+            documentSize: intval($data['document_size']),
+            documentLanguage: strval($data['document_language']),
+            documentId: strval($data['document_id']),
+            documentHash: strval($data['document_hash']),
+            documentReadByEndUser: boolval($data['document_read_by_enduser']),
+            hashAlgorithm: strval($data['hash_alg']),
+            documentCreatedAt: new DateTime(strval($data['document_created'])),
+            signArea: SignArea::create($signArea),
+            documentTitle: strval($data['document_title']),
+            documentSubject: strval($data['document_subject']),
+            documentAuthor: strval($data['document_author']),
+            documentUri: strval($data['document_uri']),
+            documentPriority: $documentPriority,
+            signField: $signField,
         );
     }
 }

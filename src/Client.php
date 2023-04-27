@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Unnits\BankId;
 
 use Exception;
+use GuzzleHttp\Utils;
 use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\JWK;
 use Jose\Component\Core\JWKSet;
@@ -65,6 +66,7 @@ class Client
      * @return AuthToken
      * @throws ClientExceptionInterface
      * @throws TokenCreationException
+     * @throws Exception
      */
     public function getToken(string $code): AuthToken
     {
@@ -85,10 +87,12 @@ class Client
 
         $response = $this->httpClient->sendRequest($request);
 
-        $content = json_decode(
+        $content = Utils::jsonDecode(
             $response->getBody()->getContents(),
-            associative: true
+            assoc: true
         );
+
+        assert(is_array($content));
 
         if ($response->getStatusCode() !== 200) {
             throw new TokenCreationException(sprintf(

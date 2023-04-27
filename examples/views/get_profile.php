@@ -32,18 +32,7 @@ if ($path === parse_url($redirectUri, PHP_URL_PATH)) {
     $token = $client->getToken($code);
     $profile = $client->getProfile($token);
 
-    $serializerManager = new JWSSerializerManager([
-        new CompactSerializer()
-    ]);
-
-    $jwt = $serializerManager->unserialize($token->tokenId);
-    $payload = json_decode($jwt->getPayload() ?? '', associative: true);
-
-    assert(is_array($payload));
-
-    $identityToken = IdentityToken::create($payload);
-
-    dd($identityToken);
+    dd($token->identityToken);
 }
 
 $state = '1234';

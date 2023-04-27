@@ -41,9 +41,11 @@ class DocumentObjects implements JsonSerializable
      */
     public static function create(array $data): self
     {
+        assert(is_array($data['documents']));
+
         return new self(
-            $data['envelope_name'],
-            array_map(
+            envelopeName: strval($data['envelope_name']),
+            documents: array_map(
                 fn ($item) => DocumentObject::create($item),
                 $data['documents'],
             )
