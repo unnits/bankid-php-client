@@ -68,7 +68,6 @@ class DocumentObject implements JsonSerializable
         $signArea = $data['sign_area'];
         assert(is_array($signArea));
 
-
         $signField = array_key_exists('sign_field', $data)
             ? strval($data['sign_field'])
             : null;
