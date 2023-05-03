@@ -21,6 +21,7 @@ final class AuthorizationUri
      * @param CodeChallengeMethod $codeChallengeMethod
      * @param AcrValue $acrValue
      * @param Scope[] $scopes
+     * @param string|null $requestUri
      */
     public function __construct(
         private readonly string $baseUri,
@@ -30,7 +31,8 @@ final class AuthorizationUri
         private readonly ResponseType $responseType = ResponseType::Code,
         private readonly CodeChallengeMethod $codeChallengeMethod = CodeChallengeMethod::Plain,
         private readonly AcrValue $acrValue = AcrValue::LOA2,
-        private readonly array $scopes = [Scope::OpenId]
+        private readonly array $scopes = [],
+        private readonly ?string $requestUri = null,
     ) {
         //
     }
@@ -51,6 +53,7 @@ final class AuthorizationUri
             QueryParam::State->value => $this->state,
             QueryParam::ClientId->value => $this->clientId,
             QueryParam::RedirectUri->value => $this->redirectUri,
+            QueryParam::RequestUri->value => $this->requestUri,
         ]);
 
         return sprintf(

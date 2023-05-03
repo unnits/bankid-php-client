@@ -4,7 +4,15 @@
   "type": "library",
   "require": {
     "php": "^8.1",
-    "psr/http-client": "^1.0"
+    "psr/http-client": "^1.0",
+    "web-token/jwt-signature": "^3.1",
+    "web-token/jwt-encryption": "^3.1",
+    "web-token/jwt-encryption-algorithm-rsa": "^3.1",
+    "web-token/jwt-encryption-algorithm-aescbc": "^3.1",
+    "ext-openssl": "*",
+    "ext-bcmath": "*",
+    "web-token/jwt-signature-algorithm-rsa": "^3.1",
+    "web-token/jwt-key-mgmt": "^3.1"
   },
   "authors": [
     {
@@ -16,7 +24,7 @@
       "email": "lenka.kolarova@unnits.com"
     }
   ],
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
   "autoload": {
     "psr-4": {
@@ -32,7 +40,9 @@
     "phpstan/phpstan": "^1.10.7",
     "squizlabs/php_codesniffer": "^3.0",
     "phpunit/phpunit": "^10.0",
-    "guzzlehttp/guzzle": "^7.5"
+    "guzzlehttp/guzzle": "^7.5",
+    "mockery/mockery": "^1.5",
+    "vlucas/phpdotenv": "^5.5"
   },
   "scripts": {
     "test": "phpunit --bootstrap vendor/autoload.php tests",

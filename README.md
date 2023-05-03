@@ -1,6 +1,7 @@
 # BankID Client
 
 ## Maintainers
+- Dan Charousek - dan.charousek@unnits.com
 - Lenka Kolářová - lenka.kolarova@unnits.com
 
 ## Obsah

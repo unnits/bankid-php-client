@@ -24,22 +24,22 @@ class Address
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<string, string> $data
      * @return self
      */
     public static function create(array $data): self
     {
         return new self(
-            array_key_exists('type', $data) ? AddressType::from(strtolower($data['type'])) : null,
-            $data['street'] ?? null,
-            $data['streetnumber'] ?? null,
-            $data['evidencenumber'] ?? null,
-            $data['buildingapartment'] ?? null,
-            $data['city'] ?? null,
-            $data['cityarea'] ?? null,
-            $data['zipcode'] ?? null,
-            array_key_exists('country', $data) ? strtolower($data['country']) : null,
-            $data['ruian_reference'] ?? null,
+            type: array_key_exists('type', $data) ? AddressType::from(strtolower($data['type'])) : null,
+            streetName: $data['street'] ?? null,
+            streetNumber: $data['streetnumber'] ?? null,
+            evidenceNumber: $data['evidencenumber'] ?? null,
+            buildingApartment: $data['buildingapartment'] ?? null,
+            city: $data['city'] ?? null,
+            cityArea: $data['cityarea'] ?? null,
+            zipCode: $data['zipcode'] ?? null,
+            country: array_key_exists('country', $data) ? strtolower($data['country']) : null,
+            ruianReference: $data['ruian_reference'] ?? null,
         );
     }
 }
