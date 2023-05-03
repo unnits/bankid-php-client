@@ -17,10 +17,10 @@ class IdentityToken
         public readonly DateTime $authenticatedAt,
         public readonly string $iss,
         public readonly string $aud,
-        public readonly string $nonce,
         public readonly AcrValue $acr,
-        public readonly StructuredScope $structuredScope,
         public readonly string $jti,
+        public readonly ?StructuredScope $structuredScope,
+        public readonly ?string $nonce = null,
         public readonly ?string $sid = null,
         public readonly ?string $name = null,
     ) {
@@ -41,10 +41,12 @@ class IdentityToken
             authenticatedAt: new DateTime(sprintf('@%d', $data['auth_time'])),
             iss: $data['iss'],
             aud: $data['aud'],
-            nonce: $data['nonce'],
             acr: AcrValue::from($data['acr']),
-            structuredScope: StructuredScope::create($data['structured_scope']),
             jti: $data['jti'],
+            structuredScope: array_key_exists('structured_scope', $data)
+                ? StructuredScope::create($data['structured_scope'])
+                : null,
+            nonce: $data['nonce'] ?? null,
             sid: $data['sid'] ?? null,
             name: $data['name'] ?? null,
         );
