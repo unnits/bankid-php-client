@@ -124,6 +124,10 @@ try {
 <body>
     Podpis dokumentů
 
-    <a href="<?= $authUri ?>">Podepsat</a>
+    <?php if ($authUri === null): ?>
+        <p><?= $e->getMessage() ?></p>
+    <?php else: ?>
+        <a href="<?= $authUri ?>">Podepsat</a>
+    <?php endif; ?>
 </body>
 </html>
