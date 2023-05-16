@@ -31,7 +31,7 @@ final class AuthorizationUri
         private readonly ResponseType $responseType = ResponseType::Code,
         private readonly CodeChallengeMethod $codeChallengeMethod = CodeChallengeMethod::Plain,
         private readonly AcrValue $acrValue = AcrValue::LOA2,
-        private readonly array $scopes = [],
+        private readonly array $scopes = [Scope::OpenId],
         private readonly ?string $requestUri = null,
     ) {
         //
