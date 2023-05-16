@@ -9,7 +9,7 @@ use Unnits\BankId\Enums\Scope;
 /**
  * Must match one of the Redirect URIs in BankId's developer portal
  */
-$redirectUri = 'http://localhost:8000/api/v1/contracts/contract-fields';
+$redirectUri = 'http://localhost:8000/api/v1/contracts/bank-id';
 
 $client = new BankIdClient(
     httpClient: new GuzzleClient,

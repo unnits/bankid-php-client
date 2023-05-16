@@ -19,7 +19,7 @@ use Unnits\BankId\Enums\Scope;
 /**
  * Must match one of the Redirect URIs in BankId's developer portal
  */
-$redirectUri = 'http://localhost:8000/api/v1/contracts/contract-fields';
+$redirectUri = 'http://localhost:8000/api/v1/contracts/bank-id';
 
 $httpClient = new GuzzleClient();
 
@@ -35,6 +35,7 @@ $client = new BankIdClient(
 $documentPath = __DIR__ . '/../storage/template.pdf';
 
 $documentSize = filesize($documentPath);
+
 assert(is_int($documentSize));
 
 $documentHash = hash_file('sha512', $documentPath);

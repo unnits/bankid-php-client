@@ -71,15 +71,14 @@ Vhodné pokud jste na projektu dlouho nepracovali nebo pro hromadnou aktualizaci
 
 ## Examples
 
-1. Odkomentovat mapování portu `80` v souboru `docker-compose.yml`
+1. Odkomentovat mapování portu `8000:80` v souboru `docker-compose.yml`
 
-2. Nakonfigurovat BankId údaje v `examples/index.php`
+2. Nakonfigurovat BankId údaje v `.env`
 
 2. Spustit PHP built-in server
 
    ```bash
-   make shell
-   php -S 0.0.0.0:80 -t examples
+   make serve
    ```
    
-3. Na adrese http://localhost je k dispozici příklad získávání dat o uživateli
+3. Na adrese http://localhost je k dispozici příklad získávání dat o uživateli a podpisu dokumentu přes BankID sign
