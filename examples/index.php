@@ -11,7 +11,7 @@ $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 $view = match($path) {
     '/' => 'home.php',
-    '/get-user-information', '/api/v1/contracts/contract-fields' => 'get_profile.php',
+    '/get-user-information', '/api/v1/contracts/bank-id' => 'get_profile.php',
     '/sign-document' => 'sign_document.php',
     default => null,
 };
