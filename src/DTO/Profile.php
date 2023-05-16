@@ -9,6 +9,7 @@ use Unnits\BankId\Enums\Gender;
 class Profile
 {
     /**
+     * @param string|null $customerUuid
      * @param string|null $givenName
      * @param string|null $familyName
      * @param string|null $titlePrefix
@@ -34,6 +35,7 @@ class Profile
      * @param int|null $updatedAt
      */
     public function __construct(
+        public readonly ?string $customerUuid,
         public readonly ?string $givenName,
         public readonly ?string $familyName,
         public readonly ?string $titlePrefix,
@@ -83,6 +85,7 @@ class Profile
         );
 
         return new self(
+            $data['sub'] ?? null,
             $data['given_name'] ?? null,
             $data['family_name'] ?? null,
             $data['title_prefix'] ?? null,

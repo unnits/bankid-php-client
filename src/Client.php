@@ -49,8 +49,11 @@ class Client
      * @param Scope[] $scopes
      * @return AuthorizationUri
      */
-    public function getAuthUri(string $state, ?string $requestUri = null, array $scopes = []): AuthorizationUri
-    {
+    public function getAuthUri(
+        string $state,
+        ?string $requestUri = null,
+        array $scopes = [Scope::OpenId]
+    ): AuthorizationUri {
         return new AuthorizationUri(
             baseUri: $this->baseUri,
             clientId: $this->clientId,
