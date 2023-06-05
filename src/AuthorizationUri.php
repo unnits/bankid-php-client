@@ -17,6 +17,7 @@ final class AuthorizationUri
      * @param string $clientId
      * @param string $redirectUri
      * @param string $state
+     * @param string|null $bankId
      * @param ResponseType $responseType
      * @param CodeChallengeMethod $codeChallengeMethod
      * @param AcrValue $acrValue
@@ -28,6 +29,7 @@ final class AuthorizationUri
         private readonly string $clientId,
         private readonly string $redirectUri,
         private readonly string $state,
+        private readonly ?string $bankId = null,
         private readonly ResponseType $responseType = ResponseType::Code,
         private readonly CodeChallengeMethod $codeChallengeMethod = CodeChallengeMethod::Plain,
         private readonly AcrValue $acrValue = AcrValue::LOA2,
@@ -51,6 +53,7 @@ final class AuthorizationUri
             QueryParam::ResponseType->value => $this->responseType->value,
             QueryParam::AcrValue->value => $this->acrValue->value,
             QueryParam::State->value => $this->state,
+            QueryParam::BankId->value => $this->bankId,
             QueryParam::ClientId->value => $this->clientId,
             QueryParam::RedirectUri->value => $this->redirectUri,
             QueryParam::RequestUri->value => $this->requestUri,

@@ -12,6 +12,7 @@ enum AuthorizationUriQueryParameter: string
     case ResponseType = 'response_type';
     case AcrValue = 'acr_value';
     case State = 'state';
+    case BankId = 'bank_id';
     case ClientId = 'client_id';
     case RedirectUri = 'redirect_uri';
     case RequestUri = 'request_uri';

@@ -33,6 +33,7 @@ class Profile
      * @param string[]|null $paymentAccounts
      * @param string[]|null $paymentAccountsDetails
      * @param int|null $updatedAt
+     * @param ?Verification $verification
      */
     public function __construct(
         public readonly ?string $customerUuid,
@@ -59,6 +60,7 @@ class Profile
         public readonly ?array $paymentAccounts,
         public readonly ?array $paymentAccountsDetails,
         public readonly ?int $updatedAt,
+        public readonly ?Verification $verification,
     ) {
         //
     }
@@ -109,6 +111,7 @@ class Profile
             $data['paymentAccounts'] ?? null,
             $data['paymentAccountsDetails'] ?? null,
             $data['updated_at'] ?? null,
+            $data['verification'] ?? null,
         );
     }
 }
