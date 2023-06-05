@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
-class Verification
+class VerifiedClaims
 {
     public function __construct(
-        public readonly ?string $verificationDate,
-        public readonly ?string $verificationBank,
-        public readonly ?string $trustFramework,
+        public readonly ?Verification $verification,
+        public readonly ?array $claims,
     ) {
         //
     }
@@ -21,9 +20,8 @@ class Verification
     public static function create(array $data): self
     {
         return new self(
-            $data['time'] ?? null,
-            $data['verification_process'] ?? null,
-            $data['trust_framework'] ?? null,
+            Verification::create($data['verification']) ?? null,
+            $data['claims_profile'] ?? null,
         );
     }
 }
