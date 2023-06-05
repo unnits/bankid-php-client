@@ -111,7 +111,7 @@ class Profile
             $data['paymentAccounts'] ?? null,
             $data['paymentAccountsDetails'] ?? null,
             $data['updated_at'] ?? null,
-            VerifiedClaims::create($data['verified_claims']) ?? null,
+            array_key_exists('verified_claims', $data) ? VerifiedClaims::create($data['verified_claims']) : null,
         );
     }
 }

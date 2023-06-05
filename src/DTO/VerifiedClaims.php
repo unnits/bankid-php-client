@@ -8,24 +8,24 @@ class VerifiedClaims
 {
     /**
      * @param Verification|null $verification
-     * @param String[]|null $claims
+     * @param String[] $claims
      */
     public function __construct(
         public readonly ?Verification $verification,
-        public readonly ?array $claims,
+        public readonly array $claims,
     ) {
         //
     }
 
     /**
      * @param array<string, mixed> $data
-     * @return VerifiedClaims|null
+     * @return VerifiedClaims
      */
-    public static function create(array $data): ?self
+    public static function create(array $data): self
     {
         return new self(
-            Verification::create($data['verification']) ?? null,
-            $data['claims_profile'] ?? null,
+            array_key_exists('verification', $data) ? Verification::create($data['verification']) : null,
+            $data['claims_profile'] ?? [],
         );
     }
 }
