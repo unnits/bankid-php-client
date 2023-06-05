@@ -16,9 +16,9 @@ class Verification
 
     /**
      * @param array<string, mixed> $data
-     * @return self
+     * @return Verification|null
      */
-    public static function create(array $data): self
+    public static function create(array $data): ?self
     {
         return new self(
             $data['time'] ?? null,

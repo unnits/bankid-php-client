@@ -6,6 +6,10 @@ namespace Unnits\BankId\DTO;
 
 class VerifiedClaims
 {
+    /**
+     * @param Verification|null $verification
+     * @param String[]|null $claims
+     */
     public function __construct(
         public readonly ?Verification $verification,
         public readonly ?array $claims,
@@ -15,9 +19,9 @@ class VerifiedClaims
 
     /**
      * @param array<string, mixed> $data
-     * @return self
+     * @return VerifiedClaims|null
      */
-    public static function create(array $data): self
+    public static function create(array $data): ?self
     {
         return new self(
             Verification::create($data['verification']) ?? null,
