@@ -14,7 +14,7 @@ php-cli:build:
     - docker:dind
   script:
     - IMAGE_NAME=$CI_REGISTRY_IMAGE/php-cli:build
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker pull $IMAGE_NAME || true
     - docker build --cache-from $IMAGE_NAME -t $IMAGE_NAME -f docker/php-cli/build/Dockerfile .
     - docker push $IMAGE_NAME
