@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Unnits\BankId;
 
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Utils;
 use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\JWK;
@@ -264,5 +265,28 @@ class Client
 
         return (new CompactSerializer())
             ->serialize($jwe);
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws JsonException
+     * @throws ClientExceptionInterface
+     * @return String[]
+     */
+    public function getAvailableBanks(string $bank): array
+    {
+        $request = new Request(
+            method: 'GET',
+            uri: 'https://oidc.bankid.cz/api/v1/banks',
+        );
+
+        $response = $this->httpClient->sendRequest($request);
+
+        return json_decode(
+            $response->getBody()->getContents(),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
     }
 }
