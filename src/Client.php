@@ -24,6 +24,7 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Unnits\BankId\DTO\AuthToken;
+use Unnits\BankId\DTO\Bank;
 use Unnits\BankId\DTO\Profile;
 use Unnits\BankId\DTO\RequestObject;
 use Unnits\BankId\DTO\RequestObjectCreationResponse;
@@ -271,9 +272,9 @@ class Client
      * @throws GuzzleException
      * @throws JsonException
      * @throws ClientExceptionInterface
-     * @return String[]
+     * @return Bank[]
      */
-    public function getAvailableBanks(string $bank): array
+    public function getAvailableBanks(): array
     {
         $request = new Request(
             method: 'GET',
@@ -282,11 +283,16 @@ class Client
 
         $response = $this->httpClient->sendRequest($request);
 
-        return json_decode(
+        $banks = json_decode(
             $response->getBody()->getContents(),
             true,
             512,
             JSON_THROW_ON_ERROR
+        );
+
+        return array_map(
+            fn (array $bank) => Bank::create($bank),
+            $banks['items']
         );
     }
 }

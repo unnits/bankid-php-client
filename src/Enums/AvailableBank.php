@@ -2,15 +2,28 @@
 
 declare(strict_types=1);
 
-namespace App\Contract\BankId;
+namespace Unnits\BankId\Enums;
 
 enum AvailableBank: string
 {
-    case Air = 'Air Bank';
-    case Cs = 'Česká spořitelna';
-    case Csob = 'ČSOB a.s.';
-    case Fio = 'Fio Banka a.s.';
-    case Kb = 'Komerční banka';
-    case Moneta = 'MONETA';
-    case Rb = 'Raiffeisenbank a.s.';
+    case AirBank = 'air';
+    case CeskaSporitelna = 'cs';
+    case Csob = 'csob';
+    case FioBanka = 'fio';
+    case KomercniBanka = 'kb';
+    case Moneta = 'moneta';
+    case RaiffeisenBank = 'rb';
+
+    public function label(): string
+    {
+        return match ($this) {
+            AvailableBank::AirBank => 'Air Bank',
+            AvailableBank::CeskaSporitelna => 'Česká spořitelna',
+            AvailableBank::Csob => 'ČSOB a.s.',
+            AvailableBank::FioBanka => 'Fio Banka a.s.',
+            AvailableBank::KomercniBanka => 'Komerční banka',
+            AvailableBank::Moneta => 'MONETA',
+            AvailableBank::RaiffeisenBank => 'Raiffeisenbank a.s.',
+        };
+    }
 }
