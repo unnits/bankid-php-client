@@ -16,7 +16,12 @@ class BankMetaData
     }
 
     /**
-     * @return array{'id': string, 'name': string, 'companyIdentificationNumber': string|null, 'verificationDate': string|null}
+     * @return array{
+     *     'id': string,
+     *     'name': string,
+     *     'companyIdentificationNumber': string|null,
+     *     'verificationDate': string|null
+     * }
      */
     public function jsonSerialize(): array
     {
@@ -29,7 +34,12 @@ class BankMetaData
     }
 
     /**
-     * @param array{'id': string, 'name': string, 'verificationClaim': string|null, 'verificationDate': string|null} $data
+     * @param array{
+     *     'id': string,
+     *     'name': string,
+     *     'verificationClaim': string|null,
+     *     'verificationDate': string|null
+     * } $data
      * @return self
      */
     public static function create(array $data): self
