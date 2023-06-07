@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
+use Unnits\BankId\Enums\BankService;
+
 class Bank
 {
     /**
@@ -11,7 +13,7 @@ class Bank
      * @param string $title
      * @param string|null $description
      * @param array<BankLogo> $bankLogo
-     * @param array<int, string> $availableServices
+     * @param array<int, BankService> $availableServices
      */
     public function __construct(
         public readonly string $id,
