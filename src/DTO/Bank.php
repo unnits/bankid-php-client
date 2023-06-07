@@ -13,7 +13,7 @@ class Bank
      * @param string $title
      * @param string|null $description
      * @param array<BankLogo> $bankLogo
-     * @param array<int, BankService> $availableServices
+     * @param BankService[] $availableServices
      */
     public function __construct(
         public readonly string $id,
@@ -36,12 +36,17 @@ class Bank
             $data['available_logo_images']
         );
 
+        $bankServices = array_map(
+          fn (string $bankService) => BankService::from($bankService),
+          $data['available_services']
+        );
+
         return new self(
             id: $data['id'],
             title: $data['title'],
             description: $data['description'],
             bankLogo: $logos,
-            availableServices: $data['available_services'],
+            availableServices: $bankServices,
         );
     }
 }
