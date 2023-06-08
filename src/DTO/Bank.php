@@ -12,7 +12,7 @@ class Bank
      * @param string $id
      * @param string $title
      * @param string|null $description
-     * @param array<BankLogo> $bankLogo
+     * @param BankLogo[] $bankLogo
      * @param BankService[] $availableServices
      */
     public function __construct(

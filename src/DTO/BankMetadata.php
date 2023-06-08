@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\DTO;
 
-class BankMetaData
+class BankMetadata
 {
     public function __construct(
         public readonly string $id,
