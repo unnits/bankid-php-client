@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Unnits\BankId;
 
 use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Utils;
 use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\JWK;
@@ -23,6 +24,7 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Unnits\BankId\DTO\AuthToken;
+use Unnits\BankId\DTO\Bank;
 use Unnits\BankId\DTO\Profile;
 use Unnits\BankId\DTO\RequestObject;
 use Unnits\BankId\DTO\RequestObjectCreationResponse;
@@ -264,5 +266,33 @@ class Client
 
         return (new CompactSerializer())
             ->serialize($jwe);
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws JsonException
+     * @throws ClientExceptionInterface
+     * @return Bank[]
+     */
+    public function getAvailableBanks(): array
+    {
+        $request = new Request(
+            method: 'GET',
+            uri: 'https://oidc.bankid.cz/api/v1/banks',
+        );
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $banks = json_decode(
+            $response->getBody()->getContents(),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+
+        return array_map(
+            fn (array $bank) => Bank::create($bank),
+            $banks['items']
+        );
     }
 }
