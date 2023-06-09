@@ -37,7 +37,7 @@ class BankMetadata
      * @param array{
      *     'id': string,
      *     'name': string,
-     *     'verificationClaim': string|null,
+     *     'companyIdentificationNumber': string|null,
      *     'verificationDate': string|null
      * } $data
      * @return self
@@ -47,7 +47,7 @@ class BankMetadata
         return new self(
             id: $data['id'],
             name: $data['name'],
-            companyIdentificationNumber: $data['verificationClaim'] ?? null,
+            companyIdentificationNumber: $data['companyIdentificationNumber'] ?? null,
             verificationDate: $data['verificationDate'] ?? null,
         );
     }
