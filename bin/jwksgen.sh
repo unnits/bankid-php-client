@@ -1,8 +1,16 @@
 #!/bin/bash
 
+publicKeyPath="key.public.pem"
+privateKeyPath="key.private.pem"
+
+if [ ! -f "${privateKeyPath}" ]; then
+  echo "Could not find private key in ${privateKeyPath}"
+  exit 1
+fi
+
 # Check if certificate file path is provided as first parameter
 if [ -n "$1" ] && [ -f "$1" ]; then
-  cert_file="$1"
+  certFile="$1"
 else
   # Prompt user for subject details
   echo "Enter subject details (CN): "
@@ -12,7 +20,8 @@ else
   openssl req \
     -x509 \
     -newkey rsa:4096 \
-    -keyout key.private.pem \
+    -sha256
+    -keyout "${privateKeyPath}" \
     -out cert.pem \
     -days 3650 \
     -nodes \
@@ -20,19 +29,30 @@ else
     -addext "extendedKeyUsage=codeSigning" \
     -addext "keyUsage=digitalSignature"
 
-  cert_file="cert.pem"
+  certFile="cert.pem"
 fi
 
 # Output public key
-openssl rsa -in key.private.pem -outform PEM -pubout -out key.public.pem
+openssl rsa -in "${privateKeyPath}" -outform PEM -pubout -out "${publicKeyPath}"
 
-# Generate JSON Web Key representation
-keyMeta="$(cat key.public.pem | openssl asn1parse -noout -inform PEM -out /dev/stdout)"
-e=$(echo "${keyMeta}" | tail -c +5 | head -c 3 | xxd -p)
-n=$(echo "${keyMeta}" | tail -c +8 | head -c -1 | xxd -p)
-x5c=$(cat cert.pem | sed '1d;$d' | tr -d '\n')
+rsaInfo=$(php <<'EOF'
+<?php
+  $keyInfo = openssl_pkey_get_details(openssl_pkey_get_public(file_get_contents('key.public.pem')));
+  $encode = fn ($val) => rtrim(str_replace(['+', '/'], ['-', '_'], base64_encode($val)), '=');
+
+  echo sprintf(
+    "%s:%s",
+    $encode($keyInfo["rsa"]["n"]),
+    $encode($keyInfo["rsa"]["e"]),
+  );
+EOF
+)
+
 kid=$(uuidgen)
-x5t=$(cat key.public.pem | openssl pkey -pubin -outform DER | openssl dgst -sha256 -binary | openssl enc -base64)
+modulus=$(echo "${rsaInfo}" | cut -d':' -f1)
+exponent=$(echo "${rsaInfo}" | cut -d':' -f2)
+x5c=$(cat "${certFile}" | sed '1d;$d' | tr -d '\n')
+x5t=$(openssl x509 -in "${certFile}" -noout -fingerprint -sha256 | cut -d "=" -f 2 | tr -d ":")
 
 # Output JSON Web Key representation
-echo "{ \"kty\": \"RSA\", \"x5t#S256\": \"$x5t\", \"e\": \"$e\", \"use\": \"sig\", \"kid\": \"$kid\", \"x5c\": [\"$x5c\"], \"n\": \"$n\" }"
+echo "{\"kty\": \"RSA\", \"x5t#S256\": \"$x5t\", \"e\": \"$exponent\", \"use\": \"sig\", \"kid\": \"$kid\", \"x5c\": [\"$x5c\"], \"n\": \"$modulus\"}"
