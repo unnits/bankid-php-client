@@ -14,15 +14,15 @@ else
   # Generate new x509 self-signed certificate
   openssl req \
     -x509 \
-    -newkey rsa:4096 \
-    -sha256
-    -keyout "${privateKeyPath}" \
-    -out cert.pem \
-    -days 3650 \
     -nodes \
+    -newkey rsa:4096 \
+    -sha256 \
+    -keyout "${privateKeyPath}" \
+    -days 3650 \
     -subj "/CN=$CN" \
     -addext "extendedKeyUsage=codeSigning" \
-    -addext "keyUsage=digitalSignature"
+    -addext "keyUsage=digitalSignature" \
+    -out cert.pem
 
   certFile="cert.pem"
 fi
