@@ -3,11 +3,6 @@
 publicKeyPath="key.public.pem"
 privateKeyPath="key.private.pem"
 
-if [ ! -f "${privateKeyPath}" ]; then
-  echo "Could not find private key in ${privateKeyPath}"
-  exit 1
-fi
-
 # Check if certificate file path is provided as first parameter
 if [ -n "$1" ] && [ -f "$1" ]; then
   certFile="$1"
@@ -30,6 +25,11 @@ else
     -addext "keyUsage=digitalSignature"
 
   certFile="cert.pem"
+fi
+
+if [ ! -f "${privateKeyPath}" ]; then
+  echo "Could not find private key in ${privateKeyPath}"
+  exit 1
 fi
 
 # Output public key
