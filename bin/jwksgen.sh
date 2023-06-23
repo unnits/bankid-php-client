@@ -3,6 +3,20 @@
 publicKeyPath="key.public.pem"
 privateKeyPath="key.private.pem"
 
+function getrsainfo() {
+cat <<'EOF' | docker run -v $(pwd):/app -w /app --rm -i php:8.2.7-cli-alpine3.18 php
+<?php
+  $keyInfo = openssl_pkey_get_details(openssl_pkey_get_public(file_get_contents('key.public.pem')));
+  $encode = fn ($val) => rtrim(str_replace(['+', '/'], ['-', '_'], base64_encode($val)), '=');
+
+  echo sprintf(
+    "%s:%s",
+    $encode($keyInfo["rsa"]["n"]),
+    $encode($keyInfo["rsa"]["e"]),
+  );
+EOF
+}
+
 # Check if certificate file path is provided as first parameter
 if [ -n "$1" ] && [ -f "$1" ]; then
   certFile="$1"
@@ -35,18 +49,7 @@ fi
 # Output public key
 openssl rsa -in "${privateKeyPath}" -outform PEM -pubout -out "${publicKeyPath}"
 
-rsaInfo=$(php <<'EOF'
-<?php
-  $keyInfo = openssl_pkey_get_details(openssl_pkey_get_public(file_get_contents('key.public.pem')));
-  $encode = fn ($val) => rtrim(str_replace(['+', '/'], ['-', '_'], base64_encode($val)), '=');
-
-  echo sprintf(
-    "%s:%s",
-    $encode($keyInfo["rsa"]["n"]),
-    $encode($keyInfo["rsa"]["e"]),
-  );
-EOF
-)
+rsaInfo=$(getrsainfo)
 
 kid=$(uuidgen)
 modulus=$(echo "${rsaInfo}" | cut -d':' -f1)
