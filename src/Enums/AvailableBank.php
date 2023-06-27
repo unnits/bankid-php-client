@@ -20,7 +20,7 @@ enum AvailableBank: string
             AvailableBank::AirBank => 'Air Bank',
             AvailableBank::CeskaSporitelna => 'Česká spořitelna',
             AvailableBank::Csob => 'ČSOB a.s.',
-            AvailableBank::FioBanka => 'Fio Banka a.s.',
+            AvailableBank::FioBanka => 'Fio banka a.s.',
             AvailableBank::KomercniBanka => 'Komerční banka',
             AvailableBank::Moneta => 'MONETA',
             AvailableBank::RaiffeisenBank => 'Raiffeisenbank a.s.',
