@@ -7,7 +7,7 @@ namespace Unnits\BankId\DTO;
 class Verification
 {
     public function __construct(
-        public readonly string $verificationDate,
+        public readonly ?string $verificationDate,
         public readonly string $verificationBank,
         public readonly string $trustFramework,
     ) {
@@ -21,7 +21,7 @@ class Verification
     public static function create(array $data): self
     {
         return new self(
-            $data['time'],
+            $data['time'] ?? null,
             $data['verification_process'],
             $data['trust_framework'],
         );
