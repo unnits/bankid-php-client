@@ -14,7 +14,7 @@ class IdentityToken
         public readonly string $sub,
         public readonly DateTime $expiresAt,
         public readonly DateTime $issuedAt,
-        public readonly DateTime $authenticatedAt,
+        public readonly ?DateTime $authenticatedAt,
         public readonly string $iss,
         public readonly string $aud,
         public readonly AcrValue $acr,
@@ -38,7 +38,9 @@ class IdentityToken
             sub: $data['sub'],
             expiresAt: new DateTime(sprintf('@%d', $data['exp'])),
             issuedAt: new DateTime(sprintf('@%d', $data['iat'])),
-            authenticatedAt: new DateTime(sprintf('@%d', $data['auth_time'])),
+            authenticatedAt: array_key_exists('auth_time', $data)
+                ? new DateTime(sprintf('@%d', $data['auth_time']))
+                : null,
             iss: $data['iss'],
             aud: $data['aud'],
             acr: AcrValue::from($data['acr']),
