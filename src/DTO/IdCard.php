@@ -26,11 +26,13 @@ class IdCard
      */
     public static function create(array $data): self
     {
-        assert(is_string($data['description']) || is_null($data['description']));
+        $description = $data['description'] ?? null;
+
+        assert(is_string($description) || is_null($description));
 
         return new self(
             array_key_exists('type', $data) ? IdCardType::from(strtolower($data['type'])) : null,
-            $data['description'] ?? null,
+            $description,
             array_key_exists('country', $data) ? strtolower($data['country']) : null,
             $data['number'] ?? null,
             $data['valid_to'] ?? null,
