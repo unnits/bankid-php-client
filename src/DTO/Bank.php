@@ -44,7 +44,7 @@ class Bank
         return new self(
             id: $data['id'],
             title: $data['title'],
-            description: $data['description'],
+            description: $data['description'] ?? null,
             bankLogo: $logos,
             availableServices: $bankServices,
         );
