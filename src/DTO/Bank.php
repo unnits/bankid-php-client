@@ -36,7 +36,7 @@ class Bank
         );
 
         $bankServices = array_map(
-            fn (string $bankService) => BankService::tryFrom($bankService) ?? $bankService,
+            fn (string $bankService) => BankService::from($bankService),
             $data['available_services']
         );
 
