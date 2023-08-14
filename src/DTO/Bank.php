@@ -22,7 +22,6 @@ class Bank
         public readonly array $bankLogo,
         public readonly array $availableServices,
     ) {
-        //
     }
 
     /**
@@ -37,7 +36,7 @@ class Bank
         );
 
         $bankServices = array_map(
-            fn (string $bankService) => BankService::from($bankService),
+            fn (string $bankService) => BankService::tryFrom($bankService) ?? $bankService,
             $data['available_services']
         );
 
