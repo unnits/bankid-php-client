@@ -22,7 +22,6 @@ class Bank
         public readonly array $bankLogo,
         public readonly array $availableServices,
     ) {
-        //
     }
 
     /**
