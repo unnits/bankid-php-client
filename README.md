@@ -1,84 +1,27 @@
-# BankID Client
+# Bank iD Client
 
 ## Maintainers
 - Dan Charousek - dan.charousek@unnits.com
 - Lenka Kolářová - lenka.kolarova@unnits.com
 
-## Obsah
-- [Instalace projektu](#instalace-projektu)
-- [Každodenní používání](#každodenní-používání)
-- [Pomocné skripty](#pomocné-skripty)
-- [Testy](#testy)
-- [Upgrade projektu](#plošná-aktualizace-projektu)
-- [Examples](#examples)
+## Cross road
+- [I want to start using Bank iD in my application](./docs/user_guide.md)
+- [I want to start developing this library](./docs/developer_guide.md)
 
-## Instalace projektu
+## About
 
-1. Naklonovat repozitář:
+This is a [Bank iD](https://www.bankid.cz/en) client library for PHP applications.
 
-        $ git clone git@gitlab.litea.dev:unnits/unniparts/bankid-client.git
-        $ cd bankid-client
+### Features
 
-2. Překopírování souborů nezávislých na prostředí:
-
-        $ make configure
-
-3. Inicializace aplikace:
-
-        $ make install
-
-## Každodenní používání
-
-1. Spuštění projektu
-
-        $ make up
-
-2. Ukončení projektu
-
-        $ make down
-
-### Pomocné skripty
-
-Přepne uživatele do PHP kontejneru, pracovat s Composer nebo Laravel artisanem
-
-    $ make shell
-
-## Testy
-
-1. PHPUnit
-
-        $ make phpunit
-
-2. PHPStan
-
-        $ make phpstan
-
-3. Code Sniffer
-
-        $ make phpcs    // kontrola
-        $ make phpcbf   // automatická oprava
-
-4. Security check
-
-        $ make security-check 
-
-## Plošná aktualizace projektu
-
-    $ make upgrade
-
-Aktualizuje docker image a composer závislosti.
-Vhodné pokud jste na projektu dlouho nepracovali nebo pro hromadnou aktualizaci knihoven.
-
-## Examples
-
-1. Odkomentovat mapování portu `8000:80` v souboru `docker-compose.yml`
-
-2. Nakonfigurovat BankId údaje v `.env`
-
-2. Spustit PHP built-in server
-
-   ```bash
-   make serve
-   ```
-   
-3. Na adrese http://localhost je k dispozici příklad získávání dat o uživateli a podpisu dokumentu přes BankID sign
+- PHP `>=8.1`
+- [Extensive user guide](./docs/user_guide.md)
+- [Static analysis](./docs/developer_guide.md#static-analysis)
+- [Automated tests](./docs/developer_guide.md#automated-tests)
+- [Code style enforcement](./docs/developer_guide.md#code-style)
+- [Many examples](./docs/user_guide.md#examples)
+- [Certificate generation tools](./docs/developer_guide.md#certificates)
+- [Dockerized](./docs/developer_guide.md#docker)
+- [Value object representations and DTOs](./docs/user_guide.md#value-objects-and-dtos)
+- [PSR friendly](./docs/user_guide.md#psr)
+- [Extensible](./docs/user_guide.md#extensible)

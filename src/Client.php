@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Unnits\BankId;
 
 use Exception;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Utils;
 use Jose\Component\Core\AlgorithmManager;
 use Jose\Component\Core\JWK;
@@ -269,7 +268,6 @@ class Client
     }
 
     /**
-     * @throws GuzzleException
      * @throws JsonException
      * @throws ClientExceptionInterface
      * @return Bank[]

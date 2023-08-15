@@ -7,7 +7,6 @@ up:
 down:
 	./cmd.sh dc down
 
-
 install: up
 	./cmd.sh dc exec php-cli chown -R $(UID):$(UID) /.composer
 	./cmd.sh dc exec --user $(UID) php-cli composer install
@@ -27,7 +26,7 @@ shell: up
 	./cmd.sh dc exec -u $(UID) php-cli sh
 
 phpunit: up
-	@echo "Running unit test"
+	@echo "Running unit tests"
 	./cmd.sh dc exec -u $(UID) php-cli composer test
 
 phpstan: up

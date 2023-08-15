@@ -2,6 +2,39 @@
   "name": "unnits/bankid-client",
   "description": "Client for communication with BankID services",
   "type": "library",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "Dan Charousek",
+      "email": "dan.charousek@unnits.com"
+    },
+    {
+      "name": "Lenka Kolářová",
+      "email": "lenka.kolarova@unnits.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Unnits\\BankId\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "phpunit": "phpunit --bootstrap vendor/autoload.php tests",
+    "phpstan": "php -d memory_limit=4G vendor/bin/phpstan analyse",
+    "phpcs": "phpcs --standard=PSR1,PSR12 src",
+    "phpcbf": "phpcbf --standard=PSR1,PSR12 src",
+    "test": [
+      "@phpstan",
+      "@phpcs",
+      "@phpunit"
+    ]
+  },
   "require": {
     "php": "^8.1",
     "psr/http-client": "^1.0",
@@ -14,28 +47,6 @@
     "web-token/jwt-signature-algorithm-rsa": "^3.1",
     "web-token/jwt-key-mgmt": "^3.1"
   },
-  "authors": [
-    {
-      "name": "Dan Charousek",
-      "email": "dan.charousek@unnits.com"
-    },
-    {
-      "name": "Lenka Kolářová",
-      "email": "lenka.kolarova@unnits.com"
-    }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "autoload": {
-    "psr-4": {
-      "Unnits\\BankId\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Tests\\": "tests/"
-    }
-  },
   "require-dev": {
     "phpstan/phpstan": "^1.10.7",
     "squizlabs/php_codesniffer": "^3.0",
@@ -43,11 +54,5 @@
     "guzzlehttp/guzzle": "^7.5",
     "mockery/mockery": "^1.5",
     "vlucas/phpdotenv": "^5.5"
-  },
-  "scripts": {
-    "test": "phpunit --bootstrap vendor/autoload.php tests",
-    "phpstan": "php -d memory_limit=4G vendor/bin/phpstan analyse",
-    "phpcs": "phpcs --standard=PSR1,PSR12 src",
-    "phpcbf": "phpcbf --standard=PSR1,PSR12 src"
   }
 }

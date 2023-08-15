@@ -4,8 +4,8 @@ services:
     build:
       context: .
       dockerfile: docker/php-cli/dev/Dockerfile
-#    ports:
-#      - "8000:80"
+    ports:
+      - "8000:80"
     volumes:
       - ./:/data
       - ./docker/php-cli/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
