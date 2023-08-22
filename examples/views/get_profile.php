@@ -61,6 +61,8 @@ $link = (string)$client->getAuthUri($state, scopes: [
         <?php if (isset($token)): ?>
             <li><?= $token->identityToken->structuredScope->documentObject->documentUri ?? '' ?></li>
         <?php endif; ?>
+
+        <pre><code><?= print_r($profile, true) ?></code></pre>
     </ul>
 <?php endif; ?>
 </body>
