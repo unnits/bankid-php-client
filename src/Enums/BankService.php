@@ -11,6 +11,7 @@ enum BankService: string
     case SignMultiplePdf = 'SIGN_MULTIPLE_PDF';
     case SignSo = 'SIGN_SO';
     case Notification = 'NOTIFICATION';
-    case UniqueIdentity = 'UNIQUE_ID' ?? 'UNIQUE_IDENTITY';
+    case UniqueIdentity = 'UNIQUE_IDENTITY';
+    case UniqueId = 'UNIQUE_ID';
     case QualifiedSignature = 'QSIGN';
 }
