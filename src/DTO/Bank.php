@@ -41,7 +41,7 @@ class Bank
                 // To avoid this duplicity we replace UNIQUE_ID with UNIQUE_IDENTITY to be able to create
                 // our own Enum
                 // ticket in Bank iD: https://developer.bankid.cz/support/EXT-3386
-                preg_replace('/^UNIQUE_ID$/', 'UNIQUE_IDENTITY', strtoupper($bankService))
+                preg_replace('/^UNIQUE_ID$/', 'UNIQUE_IDENTITY', strtoupper($bankService)) ?? ''
             ),
             $data['available_services']
         );
