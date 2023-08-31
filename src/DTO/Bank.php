@@ -36,7 +36,13 @@ class Bank
         );
 
         $bankServices = array_map(
-            fn (string $bankService) => BankService::from($bankService),
+            fn (string $bankService) => BankService::from(
+                // We can receive two values for unique identity. First is UNIQUE_ID, second is UNIQUE_IDENTITY
+                // To avoid this duplicity we replace UNIQUE_ID with UNIQUE_IDENTITY to be able to create
+                // our own Enum
+                // ticket in Bank iD: https://developer.bankid.cz/support/EXT-3386
+                preg_replace('/^UNIQUE_ID$/', 'UNIQUE_IDENTITY', strtoupper($bankService)) ?? ''
+            ),
             $data['available_services']
         );
 
