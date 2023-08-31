@@ -12,6 +12,5 @@ enum BankService: string
     case SignSo = 'SIGN_SO';
     case Notification = 'NOTIFICATION';
     case UniqueIdentity = 'UNIQUE_IDENTITY';
-    case UniqueId = 'UNIQUE_ID';
     case QualifiedSignature = 'QSIGN';
 }
