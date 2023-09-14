@@ -23,6 +23,7 @@ class IdentityToken
         public readonly ?string $nonce = null,
         public readonly ?string $sid = null,
         public readonly ?string $name = null,
+        public readonly ?string $bankId = null,
     ) {
         //
     }
@@ -51,6 +52,7 @@ class IdentityToken
             nonce: $data['nonce'] ?? null,
             sid: $data['sid'] ?? null,
             name: $data['name'] ?? null,
+            bankId: $data['bank_id'] ?? null,
         );
     }
 }
