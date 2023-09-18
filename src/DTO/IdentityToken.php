@@ -19,11 +19,11 @@ class IdentityToken
         public readonly string $aud,
         public readonly AcrValue $acr,
         public readonly string $jti,
+        public readonly string $bankId,
         public readonly ?StructuredScope $structuredScope,
         public readonly ?string $nonce = null,
         public readonly ?string $sid = null,
         public readonly ?string $name = null,
-        public readonly ?string $bankId = null,
     ) {
         //
     }
@@ -46,13 +46,13 @@ class IdentityToken
             aud: $data['aud'],
             acr: AcrValue::from($data['acr']),
             jti: $data['jti'],
+            bankId: $data['bank_id'],
             structuredScope: array_key_exists('structured_scope', $data)
                 ? StructuredScope::create($data['structured_scope'])
                 : null,
             nonce: $data['nonce'] ?? null,
             sid: $data['sid'] ?? null,
             name: $data['name'] ?? null,
-            bankId: $data['bank_id'] ?? null,
         );
     }
 }
