@@ -13,6 +13,7 @@ enum AvailableBank: string
     case KomercniBanka = 'kb';
     case Moneta = 'moneta';
     case RaiffeisenBank = 'rb';
+    case Creditas = 'creditas';
 
     public function id(): string
     {
@@ -23,7 +24,8 @@ enum AvailableBank: string
             AvailableBank::FioBanka => '1aebb93d-3643-46eb-a6cf-a1760e02a810',
             AvailableBank::KomercniBanka => '3b42a926-7d02-472b-bd22-f12fdf22bf0f',
             AvailableBank::Moneta => 'bd86df8c-56a0-4d0b-b7f6-bcff83fa09de',
-            AvailableBank::RaiffeisenBank => '297c962c-6c1c-4758-81bd-93191ca62749'
+            AvailableBank::RaiffeisenBank => '297c962c-6c1c-4758-81bd-93191ca62749',
+            AvailableBank::Creditas => '87071d79-f3b6-47d0-8d3d-bbd41207b431',
         };
     }
 }
