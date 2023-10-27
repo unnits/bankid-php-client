@@ -25,7 +25,7 @@ php-cli:build:
 
 composer:
   stage: install
-  image: registry.litea.dev:443/unnits/unniparts/bankid-client/php-cli:build
+  image: $CI_REGISTRY_IMAGE//php-cli:build
   script:
     - composer --version
     - composer install -a --no-suggest --no-scripts --prefer-dist
@@ -40,7 +40,7 @@ composer:
 
 phpunit:
   stage: test
-  image: registry.litea.dev:443/unnits/unniparts/bankid-client/php-cli:build
+  image: $CI_REGISTRY_IMAGE/php-cli:build
   script:
     - composer test
   only:
@@ -52,7 +52,7 @@ phpunit:
 
 phpstan:
   stage: test
-  image: registry.litea.dev:443/unnits/unniparts/bankid-client/php-cli:build
+  image: $CI_REGISTRY_IMAGE/php-cli:build
   script:
     - composer run-script phpstan
   dependencies:
@@ -64,7 +64,7 @@ phpstan:
 
 codesniffer:
   stage: test
-  image: registry.litea.dev:443/unnits/unniparts/bankid-client/php-cli:build
+  image: $CI_REGISTRY_IMAGE/php-cli:build
   script:
     - composer run-script phpcs
   dependencies:
