@@ -42,10 +42,17 @@ final class AuthorizationUri implements Stringable
 
     public function __toString(): string
     {
-        $scopes = implode(' ', array_map(
-            fn (Scope $scope): string => $scope->value,
+        $scopes = array_filter(
             $this->scopes,
-        ));
+            fn ($scope): bool => is_a($scope, Scope::class)
+        );
+
+        $scopes = array_map(
+            fn (Scope $scope): string => $scope->value,
+            $scopes,
+        );
+
+        $scopes = implode(' ', $scopes);
 
         $params = http_build_query([
             QueryParam::ApprovalPrompt->value => 'auto',
