@@ -1,8 +1,8 @@
 # Developer guide
 
 Thank you for your intention of contributing to this project.
-Following paragraphs will work you through all the necessary steps you need
-to take in order to start developing this library
+Following paragraphs will walk you through all the necessary steps you need
+to take in order to start developing this library.
 
 ## TL;DR
 
@@ -145,7 +145,7 @@ To be able to start developing right away, you will need:
 ## Docker
 
 Bank iD client is a dockerized project. That means we use [docker](https://www.docker.com/)
-to simplify the project setup. That allows you to start developing we faster. You don't have
+to simplify the project setup. That allows you to start developing way faster. You don't have
 to install any other dependencies yourself.
 
 **That does NOT mean**, you need docker to install and use the library in your own projects.
