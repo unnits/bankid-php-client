@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Unnits/BankIdClient</title>
@@ -7,8 +7,8 @@
 
 <body>
     <ul>
-        <li><a href="/get-user-information">Předvyplňování údajů uživatele</a></li>
-        <li><a href="/sign-document">Podepisování dokumentů</a></li>
+        <li><a href="/get-user-information">Receiving user profile information using BankiD</a></li>
+        <li><a href="/sign-document">Digitally signing documents using BankiD</a></li>
     </ul>
 </body>
 </html>

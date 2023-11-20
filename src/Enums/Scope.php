@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\Enums;
 
+use Stringable;
+
 enum Scope: string
 {
     case OpenId = 'openid';
@@ -25,4 +27,22 @@ enum Scope: string
     case UpdatedAt = 'profile.updatedAt';
     case ZoneInfo = 'profile.zoneInfo';
     case Verification = 'profile.verification';
+
+    /**
+     * @param Stringable $scope
+     * @return Scope[]
+     */
+    public static function collectionFromString(Stringable $scope): array
+    {
+        /** @var array<int, Scope|null> $scopes */
+        $scopes = array_map(
+            fn (string $scope) => Scope::tryFrom($scope),
+            explode(' ', strval($scope))
+        );
+
+        /** @var Scope[] $scopes */
+        $scopes = array_filter($scopes, fn (?Scope $scope) => $scope !== null);
+
+        return $scopes;
+    }
 }

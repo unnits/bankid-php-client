@@ -7,7 +7,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use Unnits\BankId\Enums\Scope;
 
 /**
- * Must match one of the Redirect URIs in BankId's developer portal
+ * MUST match one of the Redirect URIs in BankId's developer portal
  */
 $redirectUri = 'http://localhost:8000/api/v1/contracts/bank-id';
 
@@ -28,6 +28,8 @@ if ($path === parse_url($redirectUri, PHP_URL_PATH)) {
 
     $token = $client->getToken($code);
     $profile = $client->getProfile($token);
+
+//    $tokenInfo = $client->getTokenInfo($token);
 }
 
 $state = '1234';
@@ -41,29 +43,85 @@ $link = (string)$client->getAuthUri($state, scopes: [
 
 ?>
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Unnits/BankIdClient - Ukázka získávání údajů o uživateli</title>
+    <title>Unnits/BankIdClient - Example of receiving user profile information</title>
+
+    <style>
+        body {
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-size: 14px;
+            line-height: 165%;
+            box-sizing: border-box;
+        }
+
+        .login-button {
+            background: black;
+            border-radius: 8px;
+            color: white;
+            padding: 9px 12px;
+            text-decoration: none;
+            display: inline-flex;
+        }
+
+        .login-button span {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .login-button-logo {
+            width: 70px;
+            padding-right: 10px;
+            margin-right: 10px;
+            border-right: 1px solid white;
+        }
+
+        pre {
+            background: #eee;
+            padding: 20px;
+            overflow: scroll;
+        }
+    </style>
 </head>
 
 <body>
 <?php if ($profile === null): ?>
-    <a href="<?= $link ?>">Předvyplnit pomocí BankId</a>
+    <a class="login-button" href="<?= $link ?>">
+        <img
+            alt="BankiD logo"
+            class="login-button-logo"
+            src="https://idp.bankid.cz/resources/vzt9w/login/bankid/img/logo-white.svg"
+        >
+
+        <span>Sign In with Bank iD</span>
+    </a>
 <?php else: ?>
+    <a href="/">Back</a>
+
     <ul>
-        <li>Jméno: <?= $profile->givenName ?></li>
-        <li>Příjmení: <?= $profile->familyName ?></li>
-        <li>Věk: <?= $profile->age ?></li>
-        <li>Místo narození: <?= $profile->birthPlace ?></li>
+        <li>Given name: <?= $profile->givenName ?></li>
+        <li>Family name : <?= $profile->familyName ?></li>
+        <li>Age: <?= $profile->age ?></li>
+        <li>Birth place: <?= $profile->birthPlace ?></li>
         <li>...</li>
-
-        <?php if (isset($token)): ?>
-            <li><?= $token->identityToken->structuredScope->documentObject->documentUri ?? '' ?></li>
-        <?php endif; ?>
-
-        <pre><code><?= print_r($profile, true) ?></code></pre>
     </ul>
+
+    <h2>Profile</h2>
+    <pre><code><?= print_r($profile, true) ?></code></pre>
+
+    <?php if (isset($token)): ?>
+        <h2>Access Token</h2>
+        <?= $token->identityToken->structuredScope->documentObject->documentUri ?? '' ?>
+
+        <pre><code><?= print_r($token, true) ?></code></pre>
+    <?php endif; ?>
+
+    <?php if (isset($tokenInfo)): ?>
+        <h2>Token Info</h2>
+        <pre><code><?= print_r($tokenInfo, true) ?></code></pre>
+    <?php endif; ?>
 <?php endif; ?>
 </body>
 </html>
