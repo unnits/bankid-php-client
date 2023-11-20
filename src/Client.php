@@ -213,6 +213,33 @@ class Client
     }
 
     /**
+     * @throws JsonException
+     * @throws ClientExceptionInterface
+     * @return Bank[]
+     */
+    public function getAvailableBanks(): array
+    {
+        $request = new Request(
+            method: 'GET',
+            uri: 'https://oidc.bankid.cz/api/v1/banks',
+        );
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $banks = json_decode(
+            $response->getBody()->getContents(),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+
+        return array_map(
+            fn (array $bank) => Bank::create($bank),
+            $banks['items']
+        );
+    }
+
+    /**
      * @see https://datatracker.ietf.org/doc/html/rfc7515
      * @param string $data
      * @param JWK $privateKey
@@ -265,32 +292,5 @@ class Client
 
         return (new CompactSerializer())
             ->serialize($jwe);
-    }
-
-    /**
-     * @throws JsonException
-     * @throws ClientExceptionInterface
-     * @return Bank[]
-     */
-    public function getAvailableBanks(): array
-    {
-        $request = new Request(
-            method: 'GET',
-            uri: 'https://oidc.bankid.cz/api/v1/banks',
-        );
-
-        $response = $this->httpClient->sendRequest($request);
-
-        $banks = json_decode(
-            $response->getBody()->getContents(),
-            true,
-            512,
-            JSON_THROW_ON_ERROR
-        );
-
-        return array_map(
-            fn (array $bank) => Bank::create($bank),
-            $banks['items']
-        );
     }
 }
