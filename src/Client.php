@@ -27,10 +27,14 @@ use Unnits\BankId\DTO\Bank;
 use Unnits\BankId\DTO\Profile;
 use Unnits\BankId\DTO\RequestObject;
 use Unnits\BankId\DTO\RequestObjectCreationResponse;
+use Unnits\BankId\DTO\TokenInfo;
+use Unnits\BankId\Enums\ClientAssertionType;
 use Unnits\BankId\Enums\JsonWebKeyUsage;
 use Unnits\BankId\Enums\Scope;
+use Unnits\BankId\Enums\TokenType;
 use Unnits\BankId\Exceptions\RequestObjectCreationException;
 use Unnits\BankId\Exceptions\TokenCreationException;
+use Unnits\BankId\Exceptions\TokenInfoException;
 
 class Client
 {
@@ -235,8 +239,71 @@ class Client
 
         return array_map(
             fn (array $bank) => Bank::create($bank),
-            $banks['items']
+            $banks['items'] ?? []
         );
+    }
+
+    /**
+     * @throws TokenInfoException
+     * @throws ClientExceptionInterface
+     * @throws Exception
+     */
+    public function getTokenInfo(
+        AuthToken|string $token,
+        ?TokenType $tokenTypeHint = null,
+        ?string $clientAssertion = null,
+        ?ClientAssertionType $clientAssertionType = null
+    ): TokenInfo {
+        $tokenValue = is_string($token)
+            ? $token
+            : $token->value;
+
+        $body = [
+            'token' => $tokenValue,
+        ];
+
+        if ($tokenTypeHint !== null) {
+            $body['token_type_hint'] = $tokenTypeHint->value;
+        }
+
+        if ($clientAssertion !== null) {
+            $body['client_assertion'] = $clientAssertion;
+        }
+
+        if ($clientAssertionType !== null) {
+            $body['client_assertion_type'] = $clientAssertionType->value;
+        }
+
+        $request = new Request(
+            method: 'POST',
+            uri: sprintf('%s/token-info', $this->baseUri),
+            headers: [
+                'Content-Type' => 'application/x-www-form-urlencoded',
+                'Authorization' => sprintf('Bearer %s', $tokenValue)
+            ],
+            body: http_build_query($body)
+        );
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $content = Utils::jsonDecode(
+            $response->getBody()->getContents(),
+            assoc: true
+        );
+
+        assert(is_array($content));
+
+        if ($response->getStatusCode() !== 200) {
+            throw new TokenInfoException(sprintf(
+                'Failed getting token info: (%d %s) %s. Trace id: %s',
+                $response->getStatusCode(),
+                $content['error'],
+                $content['error_description'],
+                $response->getHeaderLine('traceId')
+            ));
+        }
+
+        return TokenInfo::create($content);
     }
 
     /**
