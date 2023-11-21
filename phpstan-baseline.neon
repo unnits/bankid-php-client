@@ -1,0 +1,441 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Cannot access offset 'items' on mixed\\.$#"
+			count: 1
+			path: src/Client.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\)\\: Unnits\\\\BankId\\\\DTO\\\\Bank given\\.$#"
+			count: 1
+			path: src/Client.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\Profile\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
+			count: 1
+			path: src/Client.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\RequestObjectCreationResponse\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
+			count: 1
+			path: src/Client.php
+
+		-
+			message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
+			count: 1
+			path: src/Client.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\)\\: Unnits\\\\BankId\\\\DTO\\\\BankLogo given\\.$#"
+			count: 1
+			path: src/DTO/Bank.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: Unnits\\\\BankId\\\\Enums\\\\BankService given\\.$#"
+			count: 1
+			path: src/DTO/Bank.php
+
+		-
+			message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
+			count: 2
+			path: src/DTO/Bank.php
+
+		-
+			message: "#^Parameter \\$description of class Unnits\\\\BankId\\\\DTO\\\\Bank constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Bank.php
+
+		-
+			message: "#^Parameter \\$id of class Unnits\\\\BankId\\\\DTO\\\\Bank constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Bank.php
+
+		-
+			message: "#^Parameter \\$title of class Unnits\\\\BankId\\\\DTO\\\\Bank constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Bank.php
+
+		-
+			message: "#^Parameter \\$height of class Unnits\\\\BankId\\\\DTO\\\\BankLogo constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/DTO/BankLogo.php
+
+		-
+			message: "#^Parameter \\$id of class Unnits\\\\BankId\\\\DTO\\\\BankLogo constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/BankLogo.php
+
+		-
+			message: "#^Parameter \\$url of class Unnits\\\\BankId\\\\DTO\\\\BankLogo constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/BankLogo.php
+
+		-
+			message: "#^Parameter \\$width of class Unnits\\\\BankId\\\\DTO\\\\BankLogo constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/DTO/BankLogo.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function strtolower expects string, mixed given\\.$#"
+			count: 2
+			path: src/DTO/IdCard.php
+
+		-
+			message: "#^Parameter \\#4 \\$number of class Unnits\\\\BankId\\\\DTO\\\\IdCard constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdCard.php
+
+		-
+			message: "#^Parameter \\#5 \\$validTo of class Unnits\\\\BankId\\\\DTO\\\\IdCard constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdCard.php
+
+		-
+			message: "#^Parameter \\#6 \\$issuedBy of class Unnits\\\\BankId\\\\DTO\\\\IdCard constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdCard.php
+
+		-
+			message: "#^Parameter \\#7 \\$issuedAt of class Unnits\\\\BankId\\\\DTO\\\\IdCard constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdCard.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\StructuredScope\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of static method Unnits\\\\BankId\\\\Enums\\\\AcrValue\\:\\:from\\(\\) expects int\\|string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 3
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\$aud of class Unnits\\\\BankId\\\\DTO\\\\IdentityToken constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\$bankId of class Unnits\\\\BankId\\\\DTO\\\\IdentityToken constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\$iss of class Unnits\\\\BankId\\\\DTO\\\\IdentityToken constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\$jti of class Unnits\\\\BankId\\\\DTO\\\\IdentityToken constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\$name of class Unnits\\\\BankId\\\\DTO\\\\IdentityToken constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\$nonce of class Unnits\\\\BankId\\\\DTO\\\\IdentityToken constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\$sid of class Unnits\\\\BankId\\\\DTO\\\\IdentityToken constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\$sub of class Unnits\\\\BankId\\\\DTO\\\\IdentityToken constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/IdentityToken.php
+
+		-
+			message: "#^Parameter \\#1 \\$iban of class Unnits\\\\BankId\\\\DTO\\\\PaymentAccount constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/PaymentAccount.php
+
+		-
+			message: "#^Parameter \\#2 \\$currency of class Unnits\\\\BankId\\\\DTO\\\\PaymentAccount constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/PaymentAccount.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\)\\: Unnits\\\\BankId\\\\DTO\\\\Address given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\)\\: Unnits\\\\BankId\\\\DTO\\\\IdCard given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#1 \\$customerUuid of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\VerifiedClaims\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function strtolower expects string, mixed given\\.$#"
+			count: 3
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of static method Unnits\\\\BankId\\\\Enums\\\\Gender\\:\\:from\\(\\) expects int\\|string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#10 \\$birthPlace of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#14 \\$maritalStatus of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#15 \\$majority of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects bool\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#16 \\$email of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#17 \\$phoneNumber of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#18 \\$limitedLegalCapacity of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects bool\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#19 \\$pep of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects bool\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
+			count: 3
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#2 \\$givenName of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#22 \\$paymentAccounts of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#23 \\$paymentAccountsDetails of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#24 \\$updatedAt of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects int\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#3 \\$familyName of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#4 \\$titlePrefix of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#5 \\$titleSuffix of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#7 \\$age of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects int\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#8 \\$birthDate of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#9 \\$birthNumber of class Unnits\\\\BankId\\\\DTO\\\\Profile constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Profile.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\StructuredScope\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObject.php
+
+		-
+			message: "#^Parameter \\#1 \\$separator of function explode expects non\\-empty\\-string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObject.php
+
+		-
+			message: "#^Parameter \\$acrValues of class Unnits\\\\BankId\\\\DTO\\\\RequestObject constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObject.php
+
+		-
+			message: "#^Parameter \\$bankId of class Unnits\\\\BankId\\\\DTO\\\\RequestObject constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObject.php
+
+		-
+			message: "#^Parameter \\$clientId of class Unnits\\\\BankId\\\\DTO\\\\RequestObject constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObject.php
+
+		-
+			message: "#^Parameter \\$maxAge of class Unnits\\\\BankId\\\\DTO\\\\RequestObject constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObject.php
+
+		-
+			message: "#^Parameter \\$nonce of class Unnits\\\\BankId\\\\DTO\\\\RequestObject constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObject.php
+
+		-
+			message: "#^Parameter \\$responseType of class Unnits\\\\BankId\\\\DTO\\\\RequestObject constructor expects Unnits\\\\BankId\\\\Enums\\\\ResponseType, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObject.php
+
+		-
+			message: "#^Parameter \\$state of class Unnits\\\\BankId\\\\DTO\\\\RequestObject constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObject.php
+
+		-
+			message: "#^Parameter \\$txn of class Unnits\\\\BankId\\\\DTO\\\\RequestObject constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObject.php
+
+		-
+			message: "#^Parameter \\#2 \\$requestUri of class Unnits\\\\BankId\\\\DTO\\\\RequestObjectCreationResponse constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObjectCreationResponse.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObjectCreationResponse.php
+
+		-
+			message: "#^Parameter \\#3 \\$uploadUri of class Unnits\\\\BankId\\\\DTO\\\\RequestObjectCreationResponse constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObjectCreationResponse.php
+
+		-
+			message: "#^Parameter \\#4 \\$uploadUris of class Unnits\\\\BankId\\\\DTO\\\\RequestObjectCreationResponse constructor expects array\\<string, string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/RequestObjectCreationResponse.php
+
+		-
+			message: "#^Parameter \\#1 \\$x of class Unnits\\\\BankId\\\\DTO\\\\SignArea constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/DTO/SignArea.php
+
+		-
+			message: "#^Parameter \\#2 \\$y of class Unnits\\\\BankId\\\\DTO\\\\SignArea constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/DTO/SignArea.php
+
+		-
+			message: "#^Parameter \\#3 \\$width of class Unnits\\\\BankId\\\\DTO\\\\SignArea constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/DTO/SignArea.php
+
+		-
+			message: "#^Parameter \\#4 \\$height of class Unnits\\\\BankId\\\\DTO\\\\SignArea constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/DTO/SignArea.php
+
+		-
+			message: "#^Parameter \\#5 \\$page of class Unnits\\\\BankId\\\\DTO\\\\SignArea constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/DTO/SignArea.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\SignObjectField\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
+			count: 1
+			path: src/DTO/SignObject.php
+
+		-
+			message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
+			count: 1
+			path: src/DTO/SignObject.php
+
+		-
+			message: "#^Parameter \\#1 \\$priority of class Unnits\\\\BankId\\\\DTO\\\\SignObjectField constructor expects int, mixed given\\.$#"
+			count: 1
+			path: src/DTO/SignObjectField.php
+
+		-
+			message: "#^Parameter \\#2 \\$value of class Unnits\\\\BankId\\\\DTO\\\\SignObjectField constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/SignObjectField.php
+
+		-
+			message: "#^Parameter \\#3 \\$key of class Unnits\\\\BankId\\\\DTO\\\\SignObjectField constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/SignObjectField.php
+
+		-
+			message: "#^Parameter \\#1 \\$scope of static method Unnits\\\\BankId\\\\Enums\\\\Scope\\:\\:collectionFromString\\(\\) expects string\\|Stringable, mixed given\\.$#"
+			count: 1
+			path: src/DTO/TokenInfo.php
+
+		-
+			message: "#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#"
+			count: 2
+			path: src/DTO/TokenInfo.php
+
+		-
+			message: "#^Parameter \\#1 \\$verificationDate of class Unnits\\\\BankId\\\\DTO\\\\Verification constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Verification.php
+
+		-
+			message: "#^Parameter \\#2 \\$verificationBank of class Unnits\\\\BankId\\\\DTO\\\\Verification constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Verification.php
+
+		-
+			message: "#^Parameter \\#3 \\$trustFramework of class Unnits\\\\BankId\\\\DTO\\\\Verification constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/Verification.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\Verification\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
+			count: 1
+			path: src/DTO/VerifiedClaims.php
+
+		-
+			message: "#^Parameter \\#2 \\$claims of class Unnits\\\\BankId\\\\DTO\\\\VerifiedClaims constructor expects array\\<string\\>, mixed given\\.$#"
+			count: 1
+			path: src/DTO/VerifiedClaims.php

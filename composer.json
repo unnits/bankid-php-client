@@ -1,6 +1,6 @@
 {
   "name": "unnits/bankid-client",
-  "description": "Client for communication with BankID services",
+  "description": "Client for communication with Bank iD services",
   "type": "library",
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -27,6 +27,7 @@
   "scripts": {
     "phpunit": "phpunit --bootstrap vendor/autoload.php tests",
     "phpstan": "php -d memory_limit=4G vendor/bin/phpstan analyse",
+    "phpstan-baseline": "composer run phpstan -- --generate-baseline",
     "phpcs": "phpcs --standard=PSR1,PSR12 src",
     "phpcbf": "phpcbf --standard=PSR1,PSR12 src",
     "test": [
