@@ -37,6 +37,8 @@ if ($path === parse_url($redirectUri, PHP_URL_PATH)) {
     $documentUri = $token->identityToken->structuredScope->documentObject->documentUri ?? null;
 
     $logoutUri = (string)$client->getLogoutUri($token->identityToken->rawValue ?? '', $logoutRedirectUri, '12345');
+
+    $userInfo = $client->getUserInfo($token);
 }
 
 $state = '1234';
@@ -90,6 +92,12 @@ $link = (string)$client->getAuthUri($state, scopes: [
 
         <h2>Profile</h2>
         <pre><code><?= print_r($profile, true) ?></code></pre>
+
+        <?php if (isset($userInfo)): ?>
+            <h2>User info</h2>
+
+            <pre><code><?= print_r($userInfo, true) ?></code></pre>
+        <?php endif; ?>
 
         <?php if (isset($token)): ?>
             <h2>Access Token</h2>

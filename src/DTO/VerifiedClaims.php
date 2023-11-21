@@ -25,7 +25,7 @@ class VerifiedClaims
     {
         return new self(
             array_key_exists('verification', $data) ? Verification::create($data['verification']) : null,
-            $data['claims_profile'] ?? [],
+            $data['claims'] ?? [],
         );
     }
 }

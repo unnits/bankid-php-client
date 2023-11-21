@@ -29,6 +29,7 @@ use Unnits\BankId\DTO\Profile;
 use Unnits\BankId\DTO\RequestObject;
 use Unnits\BankId\DTO\RequestObjectCreationResponse;
 use Unnits\BankId\DTO\TokenInfo;
+use Unnits\BankId\DTO\UserInfo;
 use Unnits\BankId\Enums\ClientAssertionType;
 use Unnits\BankId\Enums\JsonWebKeyUsage;
 use Unnits\BankId\Enums\Scope;
@@ -361,6 +362,44 @@ class Client
             $redirectUri,
             $state
         );
+    }
+
+    /**
+     * @param AuthToken $token
+     * @return UserInfo
+     * @throws ClientExceptionInterface
+     * @throws LogoutException
+     */
+    public function getUserInfo(AuthToken $token): UserInfo
+    {
+        $request = new Request(
+            method: 'GET',
+            uri: sprintf('%s/userinfo', $this->baseUri),
+            headers: [
+                'Authorization' => sprintf('Bearer %s', $token->value)
+            ]
+        );
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $content = Utils::jsonDecode(
+            $response->getBody()->getContents(),
+            assoc: true
+        );
+
+        assert(is_array($content));
+
+        if ($response->getStatusCode() !== 200) {
+            throw new LogoutException(sprintf(
+                'Failed logging user out: (%d %s) %s. Trace id: %s',
+                $response->getStatusCode(),
+                $content['error'],
+                $content['error_description'],
+                $response->getHeaderLine('traceId')
+            ));
+        }
+
+        return UserInfo::create($content);
     }
 
     /**
