@@ -252,7 +252,8 @@ class Client
         AuthToken|string $token,
         ?TokenType $tokenTypeHint = null,
         ?string $clientAssertion = null,
-        ?ClientAssertionType $clientAssertionType = null
+        ?ClientAssertionType $clientAssertionType = null,
+        bool $useClientCredentials = false,
     ): TokenInfo {
         $tokenValue = is_string($token)
             ? $token
@@ -266,20 +267,24 @@ class Client
             $body['token_type_hint'] = $tokenTypeHint->value;
         }
 
-        if ($clientAssertion !== null) {
-            $body['client_assertion'] = $clientAssertion;
-        }
+        if ($useClientCredentials) {
+            $body['client_id'] = $this->clientId;
+            $body['client_secret'] = $this->clientSecret;
+        } else {
+            if ($clientAssertion !== null) {
+                $body['client_assertion'] = $clientAssertion;
+            }
 
-        if ($clientAssertionType !== null) {
-            $body['client_assertion_type'] = $clientAssertionType->value;
+            if ($clientAssertionType !== null) {
+                $body['client_assertion_type'] = $clientAssertionType->value;
+            }
         }
 
         $request = new Request(
             method: 'POST',
             uri: sprintf('%s/token-info', $this->baseUri),
             headers: [
-                'Content-Type' => 'application/x-www-form-urlencoded',
-                'Authorization' => sprintf('Bearer %s', $tokenValue)
+                'Content-Type' => 'application/x-www-form-urlencoded'
             ],
             body: http_build_query($body)
         );

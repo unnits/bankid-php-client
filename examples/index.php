@@ -21,4 +21,6 @@ if ($view === null) {
     exit;
 }
 
+require_once __DIR__ . '/views/header.php';
 require_once sprintf('views/%s', $view);
+require_once __DIR__ . '/views/footer.php';

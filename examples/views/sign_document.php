@@ -115,20 +115,19 @@ try {
 }
 
 ?>
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="utf-8">
-    <title>Unnits/BankIdClient</title>
-</head>
 
-<body>
-    Podpis dokumentů
-
+<div class="document-signature">
     <?php if ($authUri === null): ?>
         <p><?= $e->getMessage() ?></p>
     <?php else: ?>
-        <a href="<?= $authUri ?>">Podepsat</a>
+        <a class="login-button" href="<?= $authUri ?>">
+            <img
+                alt="BankiD logo"
+                class="login-button-logo"
+                src="https://idp.bankid.cz/resources/vzt9w/login/bankid/img/logo-white.svg"
+            >
+
+            <span>Digitally sign document via Bank iD</span>
+        </a>
     <?php endif; ?>
-</body>
-</html>
+</div>
