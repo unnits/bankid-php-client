@@ -39,6 +39,15 @@
             border-right: 1px solid white;
         }
 
+        .logout-button {
+            border: 0;
+            background: none;
+            padding: 0;
+            text-decoration: underline;
+            color: blue;
+            cursor: pointer;
+        }
+
         pre {
             background: #eee;
             padding: 20px;

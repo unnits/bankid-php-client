@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Unnits\BankId;
 
+use Stringable;
 use Unnits\BankId\Enums\AcrValue;
 use Unnits\BankId\Enums\AuthorizationUriQueryParameter as QueryParam;
 use Unnits\BankId\Enums\CodeChallengeMethod;
 use Unnits\BankId\Enums\ResponseType;
 use Unnits\BankId\Enums\Scope;
 
-final class AuthorizationUri
+final class AuthorizationUri implements Stringable
 {
     /**
      * @param string $baseUri

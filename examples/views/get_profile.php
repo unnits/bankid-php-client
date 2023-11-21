@@ -5,11 +5,14 @@ declare(strict_types=1);
 use Unnits\BankId\Client as BankIdClient;
 use GuzzleHttp\Client as GuzzleClient;
 use Unnits\BankId\Enums\Scope;
+use Unnits\BankId\LogoutUri;
 
 /**
  * MUST match one of the Redirect URIs in BankId's developer portal
  */
 $redirectUri = 'http://localhost:8000/api/v1/contracts/bank-id';
+
+$logoutRedirectUri = 'http://localhost:8000/logout';
 
 $client = new BankIdClient(
     httpClient: new GuzzleClient,
@@ -32,6 +35,8 @@ if ($path === parse_url($redirectUri, PHP_URL_PATH)) {
     $tokenInfo = $client->getTokenInfo($token, useClientCredentials: true);
 
     $documentUri = $token->identityToken->structuredScope->documentObject->documentUri ?? null;
+
+    $logoutUri = (string)$client->getLogoutUri($token->identityToken->rawValue ?? '', $logoutRedirectUri, '12345');
 }
 
 $state = '1234';
@@ -57,12 +62,23 @@ $link = (string)$client->getAuthUri($state, scopes: [
             <span>Sign In with Bank iD</span>
         </a>
     <?php else: ?>
-        <a href="/">Back</a>
+        <ul>
+            <li><a href="/">Back</a></li>
 
-        <?php if (!empty($documentUri)): ?>
-            <br>
-            <a href="<?= $documentUri ?>">Download signed document</a>
-        <?php endif; ?>
+
+            <li>
+                <form
+                    method="post"
+                    action="<?= $logoutUri ?>"
+                >
+                    <button class="logout-button" type="submit">Logout</button>
+                </form>
+            </li>
+
+            <?php if (!empty($documentUri)): ?>
+                <li><a href="<?= $documentUri ?>">Download signed document</a></li>
+            <?php endif; ?>
+        </ul>
 
         <ul>
             <li>Given name: <?= $profile->givenName ?></li>

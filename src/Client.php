@@ -24,6 +24,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Unnits\BankId\DTO\AuthToken;
 use Unnits\BankId\DTO\Bank;
+use Unnits\BankId\DTO\IdentityToken;
 use Unnits\BankId\DTO\Profile;
 use Unnits\BankId\DTO\RequestObject;
 use Unnits\BankId\DTO\RequestObjectCreationResponse;
@@ -32,6 +33,7 @@ use Unnits\BankId\Enums\ClientAssertionType;
 use Unnits\BankId\Enums\JsonWebKeyUsage;
 use Unnits\BankId\Enums\Scope;
 use Unnits\BankId\Enums\TokenType;
+use Unnits\BankId\Exceptions\LogoutException;
 use Unnits\BankId\Exceptions\RequestObjectCreationException;
 use Unnits\BankId\Exceptions\TokenCreationException;
 use Unnits\BankId\Exceptions\TokenInfoException;
@@ -309,6 +311,56 @@ class Client
         }
 
         return TokenInfo::create($content);
+    }
+
+    /**
+     * @param string|IdentityToken $idTokenHint
+     * @param string|null $redirectUri
+     * @param string|null $state
+     * @return void
+     * @throws ClientExceptionInterface
+     * @throws LogoutException
+     */
+    public function logout(string|IdentityToken $idTokenHint, ?string $redirectUri = null, ?string $state = null): void
+    {
+        $uri = $this->getLogoutUri($idTokenHint, $redirectUri, $state);
+
+        $request = new Request(
+            method: 'POST',
+            uri: (string)$uri
+        );
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $content = Utils::jsonDecode(
+            $response->getBody()->getContents(),
+            assoc: true
+        );
+
+        assert(is_array($content));
+
+        if ($response->getStatusCode() !== 200) {
+            throw new LogoutException(sprintf(
+                'Failed logging user out: (%d %s) %s. Trace id: %s',
+                $response->getStatusCode(),
+                $content['error'],
+                $content['error_description'],
+                $response->getHeaderLine('traceId')
+            ));
+        }
+    }
+
+    public function getLogoutUri(
+        string|IdentityToken $idTokenHint,
+        ?string $redirectUri = null,
+        ?string $state = null
+    ): LogoutUri {
+        return new LogoutUri(
+            $this->baseUri,
+            $idTokenHint,
+            $redirectUri,
+            $state
+        );
     }
 
     /**

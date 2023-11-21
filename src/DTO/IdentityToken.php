@@ -24,6 +24,7 @@ class IdentityToken
         public readonly ?string $nonce = null,
         public readonly ?string $sid = null,
         public readonly ?string $name = null,
+        public readonly ?string $rawValue = null,
     ) {
         //
     }
@@ -33,7 +34,7 @@ class IdentityToken
      * @return self
      * @throws Exception
      */
-    public static function create(array $data): self
+    public static function create(array $data, ?string $rawValue = null): self
     {
         return new self(
             sub: $data['sub'],
@@ -53,6 +54,7 @@ class IdentityToken
             nonce: $data['nonce'] ?? null,
             sid: $data['sid'] ?? null,
             name: $data['name'] ?? null,
+            rawValue: $rawValue,
         );
     }
 }

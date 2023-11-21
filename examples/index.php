@@ -13,10 +13,12 @@ $view = match($path) {
     '/' => 'home.php',
     '/get-user-information', '/api/v1/contracts/bank-id' => 'get_profile.php',
     '/sign-document' => 'sign_document.php',
+    '/logout' => 'logout.php',
     default => null,
 };
 
 if ($view === null) {
+    http_response_code(404);
     echo '404 not found';
     exit;
 }

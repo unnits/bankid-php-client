@@ -50,7 +50,8 @@ class AuthToken
             new CompactSerializer()
         ]);
 
-        $jwt = $serializerManager->unserialize(strval($data['id_token']));
+        $rawIdToken = strval($data['id_token']);
+        $jwt = $serializerManager->unserialize($rawIdToken);
         $payload = Utils::jsonDecode($jwt->getPayload() ?? '', assoc: true);
 
         assert(is_array($payload));
@@ -60,7 +61,7 @@ class AuthToken
             tokenType: TokenType::from(strtolower(strval($data['token_type']))),
             expiresIn: intval($data['expires_in']),
             scopes: $scopes,
-            identityToken: IdentityToken::create($payload),
+            identityToken: IdentityToken::create($payload, $rawIdToken),
         );
     }
 }
