@@ -29,7 +29,9 @@ if ($path === parse_url($redirectUri, PHP_URL_PATH)) {
     $token = $client->getToken($code);
     $profile = $client->getProfile($token);
 
-//    $tokenInfo = $client->getTokenInfo($token);
+    $tokenInfo = $client->getTokenInfo($token, useClientCredentials: true);
+
+    $documentUri = $token->identityToken->structuredScope->documentObject->documentUri ?? null;
 }
 
 $state = '1234';
@@ -42,86 +44,46 @@ $link = (string)$client->getAuthUri($state, scopes: [
 ]);
 
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Unnits/BankIdClient - Example of receiving user profile information</title>
 
-    <style>
-        body {
-            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            font-size: 14px;
-            line-height: 165%;
-            box-sizing: border-box;
-        }
+<div class="get-profile">
+    <?php if ($profile === null): ?>
+        <a class="login-button" href="<?= $link ?>">
+            <img
+                alt="BankiD logo"
+                class="login-button-logo"
+                src="https://idp.bankid.cz/resources/vzt9w/login/bankid/img/logo-white.svg"
+            >
 
-        .login-button {
-            background: black;
-            border-radius: 8px;
-            color: white;
-            padding: 9px 12px;
-            text-decoration: none;
-            display: inline-flex;
-        }
+            <span>Sign In with Bank iD</span>
+        </a>
+    <?php else: ?>
+        <a href="/">Back</a>
 
-        .login-button span {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-        }
+        <?php if (!empty($documentUri)): ?>
+            <br>
+            <a href="<?= $documentUri ?>">Download signed document</a>
+        <?php endif; ?>
 
-        .login-button-logo {
-            width: 70px;
-            padding-right: 10px;
-            margin-right: 10px;
-            border-right: 1px solid white;
-        }
+        <ul>
+            <li>Given name: <?= $profile->givenName ?></li>
+            <li>Family name : <?= $profile->familyName ?></li>
+            <li>Age: <?= $profile->age ?></li>
+            <li>Birth place: <?= $profile->birthPlace ?></li>
+            <li>...</li>
+        </ul>
 
-        pre {
-            background: #eee;
-            padding: 20px;
-            overflow: scroll;
-        }
-    </style>
-</head>
+        <h2>Profile</h2>
+        <pre><code><?= print_r($profile, true) ?></code></pre>
 
-<body>
-<?php if ($profile === null): ?>
-    <a class="login-button" href="<?= $link ?>">
-        <img
-            alt="BankiD logo"
-            class="login-button-logo"
-            src="https://idp.bankid.cz/resources/vzt9w/login/bankid/img/logo-white.svg"
-        >
+        <?php if (isset($token)): ?>
+            <h2>Access Token</h2>
 
-        <span>Sign In with Bank iD</span>
-    </a>
-<?php else: ?>
-    <a href="/">Back</a>
+            <pre><code><?= print_r($token, true) ?></code></pre>
+        <?php endif; ?>
 
-    <ul>
-        <li>Given name: <?= $profile->givenName ?></li>
-        <li>Family name : <?= $profile->familyName ?></li>
-        <li>Age: <?= $profile->age ?></li>
-        <li>Birth place: <?= $profile->birthPlace ?></li>
-        <li>...</li>
-    </ul>
-
-    <h2>Profile</h2>
-    <pre><code><?= print_r($profile, true) ?></code></pre>
-
-    <?php if (isset($token)): ?>
-        <h2>Access Token</h2>
-        <?= $token->identityToken->structuredScope->documentObject->documentUri ?? '' ?>
-
-        <pre><code><?= print_r($token, true) ?></code></pre>
+        <?php if (isset($tokenInfo)): ?>
+            <h2>Token Info</h2>
+            <pre><code><?= print_r($tokenInfo, true) ?></code></pre>
+        <?php endif; ?>
     <?php endif; ?>
-
-    <?php if (isset($tokenInfo)): ?>
-        <h2>Token Info</h2>
-        <pre><code><?= print_r($tokenInfo, true) ?></code></pre>
-    <?php endif; ?>
-<?php endif; ?>
-</body>
-</html>
+</div>

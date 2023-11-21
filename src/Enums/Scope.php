@@ -29,10 +29,10 @@ enum Scope: string
     case Verification = 'profile.verification';
 
     /**
-     * @param Stringable $scope
+     * @param Stringable|string $scope
      * @return Scope[]
      */
-    public static function collectionFromString(Stringable $scope): array
+    public static function collectionFromString(Stringable|string $scope): array
     {
         /** @var array<int, Scope|null> $scopes */
         $scopes = array_map(
