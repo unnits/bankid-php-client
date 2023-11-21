@@ -91,6 +91,13 @@ phpstan: up
 	@echo "Running phpstan"
 	./cmd.sh dc exec -u $(UID) php-cli composer run-script phpstan
 
+# SYNOPSYS: make phpstan-baseline
+#
+# DESCRIPTION:
+phpstan-baseline: up
+	@echo "Running phpstan"
+	./cmd.sh dc exec -u $(UID) php-cli composer run-script phpstan-baseline
+
 # SYNOPSYS: make phpcs
 #
 # DESCRIPTION:
