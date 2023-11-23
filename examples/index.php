@@ -14,6 +14,7 @@ $view = match($path) {
     '/get-user-information', '/api/v1/contracts/bank-id' => 'get_profile.php',
     '/sign-document' => 'sign_document.php',
     '/logout' => 'logout.php',
+    '/oidc-configuration' => 'get_oidc_configuration.php',
     default => null,
 };
 

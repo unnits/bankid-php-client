@@ -65,9 +65,6 @@ $link = (string)$client->getAuthUri($state, scopes: [
         </a>
     <?php else: ?>
         <ul>
-            <li><a href="/">Back</a></li>
-
-
             <li>
                 <form
                     method="post"

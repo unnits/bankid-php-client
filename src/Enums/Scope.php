@@ -34,10 +34,19 @@ enum Scope: string
      */
     public static function collectionFromString(Stringable|string $scope): array
     {
+        return self::collectionFromArray(explode(' ', strval($scope)));
+    }
+
+    /**
+     * @param string[] $scopes
+     * @return Scope[]
+     */
+    public static function collectionFromArray(array $scopes): array
+    {
         /** @var array<int, Scope|null> $scopes */
         $scopes = array_map(
             fn (string $scope) => Scope::tryFrom($scope),
-            explode(' ', strval($scope))
+            $scopes
         );
 
         /** @var Scope[] $scopes */

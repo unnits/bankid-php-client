@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Unnits\BankId\Enums;
+namespace Unnits\BankId\OAuth2;
 
-enum AcrValue: string
+/**
+ * Response mode values as defined by OAuth 2.0 specification
+ * @see https://openid.net/specs/oauth-v2-multiple-response-types-1_0.html#ResponseModes
+ */
+enum ResponseMode: string
 {
-    case LOA2 = 'loa2';
-    case LOA3 = 'loa3';
-    case ACR1 = '1';
+    case Query = 'query';
+    case Fragment = 'fragment';
 
     /**
      * @param string[] $items

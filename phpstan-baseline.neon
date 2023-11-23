@@ -416,6 +416,86 @@ parameters:
 			path: src/DTO/TokenInfo.php
 
 		-
+			message: "#^Parameter \\#1 \\$customerUuid of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\VerifiedClaims\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#1 \\$value of static method Unnits\\\\BankId\\\\Enums\\\\Gender\\:\\:from\\(\\) expects int\\|string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#10 \\$email of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#13 \\$birthDate of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#14 \\$timezone of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#15 \\$locale of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#16 \\$phoneNumber of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#18 \\$updatedAt of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, bool\\|null given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#2 \\$transactionIdentifier of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#4 \\$name of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#5 \\$givenName of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#6 \\$familyName of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#7 \\$middleName of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#8 \\$nickname of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
+			message: "#^Parameter \\#9 \\$preferredUsername of class Unnits\\\\BankId\\\\DTO\\\\UserInfo constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/DTO/UserInfo.php
+
+		-
 			message: "#^Parameter \\#1 \\$verificationDate of class Unnits\\\\BankId\\\\DTO\\\\Verification constructor expects string\\|null, mixed given\\.$#"
 			count: 1
 			path: src/DTO/Verification.php
@@ -439,3 +519,268 @@ parameters:
 			message: "#^Parameter \\#2 \\$claims of class Unnits\\\\BankId\\\\DTO\\\\VerifiedClaims constructor expects array\\<string\\>, mixed given\\.$#"
 			count: 1
 			path: src/DTO/VerifiedClaims.php
+
+		-
+			message: "#^Cannot cast mixed to string\\.$#"
+			count: 6
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Method Unnits\\\\BankId\\\\OIDC\\\\Configuration\\:\\:__construct\\(\\) has parameter \\$supportedClaims with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Method Unnits\\\\BankId\\\\OIDC\\\\Configuration\\:\\:__construct\\(\\) has parameter \\$supportedClaimsLocales with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Method Unnits\\\\BankId\\\\OIDC\\\\Configuration\\:\\:__construct\\(\\) has parameter \\$supportedDisplayValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Method Unnits\\\\BankId\\\\OIDC\\\\Configuration\\:\\:__construct\\(\\) has parameter \\$supportedIntrospectionEndpointAuthMethods with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Method Unnits\\\\BankId\\\\OIDC\\\\Configuration\\:\\:__construct\\(\\) has parameter \\$supportedIntrospectionEndpointAuthSigningAlgValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Method Unnits\\\\BankId\\\\OIDC\\\\Configuration\\:\\:__construct\\(\\) has parameter \\$supportedTokenEndpointAuthMethods with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Method Unnits\\\\BankId\\\\OIDC\\\\Configuration\\:\\:__construct\\(\\) has parameter \\$supportedTokenEndpointAuthSigningAlgValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Method Unnits\\\\BankId\\\\OIDC\\\\Configuration\\:\\:__construct\\(\\) has parameter \\$supportedUiLocales with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Method Unnits\\\\BankId\\\\OIDC\\\\Configuration\\:\\:__construct\\(\\) has parameter \\$supportedUserinfoEncryptionAlgValues with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\#1 \\$items of static method Unnits\\\\BankId\\\\Enums\\\\AcrValue\\:\\:collectionFromArray\\(\\) expects array\\<string\\>, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\#1 \\$items of static method Unnits\\\\BankId\\\\Enums\\\\CodeChallengeMethod\\:\\:collectionFromArray\\(\\) expects array\\<string\\>, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\#1 \\$items of static method Unnits\\\\BankId\\\\Enums\\\\ResponseType\\:\\:collectionFromArray\\(\\) expects array\\<string\\>, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\#1 \\$items of static method Unnits\\\\BankId\\\\Enums\\\\SubjectType\\:\\:collectionFromArray\\(\\) expects array\\<string\\>, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\#1 \\$items of static method Unnits\\\\BankId\\\\OAuth2\\\\GrantType\\:\\:collectionFromArray\\(\\) expects array\\<string\\>, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\#1 \\$items of static method Unnits\\\\BankId\\\\OAuth2\\\\ResponseMode\\:\\:collectionFromArray\\(\\) expects array\\<string\\>, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\#1 \\$scopes of static method Unnits\\\\BankId\\\\Enums\\\\Scope\\:\\:collectionFromArray\\(\\) expects array\\<string\\>, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$authorizeEndpoint of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$backChannelLogoutSessionSupported of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects bool\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$backChannelLogoutSupported of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects bool\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$claimsParameterSupported of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects bool\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$introspectionEndpoint of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$opPolicyUri of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$opTosUri of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$profileEndpoint of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$requestParameterSupported of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects bool\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$requestUriParameterSupported of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects bool\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$requiredRequestUriRegistration of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects bool\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$rosEndpoint of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$serviceDocumentation of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedClaims of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedClaimsLocales of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedDisplayValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedIdTokenEncryptionAlgValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedIdTokenEncryptionEncValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedIdTokenSigningAlgValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedIntrospectionEndpointAuthMethods of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedIntrospectionEndpointAuthSigningAlgValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedProfileEncryptionAlgValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedProfileEncryptionEncValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedProfileSigningAlgValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedRequestObjectEncryptionAlgValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedRequestObjectEncryptionEncValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedRequestObjectSigningAlgValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedResponseModes of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, array\\<Unnits\\\\BankId\\\\OAuth2\\\\ResponseMode\\>\\|null given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedTokenEndpointAuthMethods of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedTokenEndpointAuthSigningAlgValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedUiLocales of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedUserinfoEncryptionAlgValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedUserinfoEncryptionEncValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$supportedUserinfoSigningAlgValues of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects array\\<string\\>\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$userinfoEndpoint of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php
+
+		-
+			message: "#^Parameter \\$verificationEndpoint of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects string\\|null, mixed given\\.$#"
+			count: 1
+			path: src/OIDC/Configuration.php

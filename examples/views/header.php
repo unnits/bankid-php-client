@@ -59,3 +59,7 @@
 <body><div class="container">
 
     <h1>Bank iD PHP client example</h1>
+
+    <a href="/">Home</a>
+
+    <hr>

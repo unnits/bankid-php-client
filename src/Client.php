@@ -38,6 +38,7 @@ use Unnits\BankId\Exceptions\LogoutException;
 use Unnits\BankId\Exceptions\RequestObjectCreationException;
 use Unnits\BankId\Exceptions\TokenCreationException;
 use Unnits\BankId\Exceptions\TokenInfoException;
+use Unnits\BankId\OIDC\Configuration;
 
 class Client
 {
@@ -400,6 +401,40 @@ class Client
         }
 
         return UserInfo::create($content);
+    }
+
+    /**
+     * @return Configuration
+     * @throws ClientExceptionInterface
+     * @throws LogoutException
+     */
+    public function getOpenIdConnectConfiguration(): Configuration
+    {
+        $request = new Request(
+            method: 'GET',
+            uri: sprintf('%s/.well-known/openid-configuration', $this->baseUri)
+        );
+
+        $response = $this->httpClient->sendRequest($request);
+
+        $content = Utils::jsonDecode(
+            $response->getBody()->getContents(),
+            assoc: true
+        );
+
+        assert(is_array($content));
+
+        if ($response->getStatusCode() !== 200) {
+            throw new LogoutException(sprintf(
+                'Failed logging user out: (%d %s) %s. Trace id: %s',
+                $response->getStatusCode(),
+                $content['error'],
+                $content['error_description'],
+                $response->getHeaderLine('traceId')
+            ));
+        }
+
+        return Configuration::create($content);
     }
 
     /**
