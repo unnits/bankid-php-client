@@ -4,6 +4,14 @@
 - Dan Charousek - dan.charousek@unnits.com
 - Lenka Kolářová - lenka.kolarova@unnits.com
 
+## Support
+
+We ([Unnits](www.unnits.com)) as official Bank iD maintainer of the PHP client library offer paid consultation on the library integration.
+
+We try our best to describe different use-cases, but in case you still struggle with integrating the library into your application let us know at hello@unnits.com and we will be happy to help.
+
+**Available both in English and Czech**.
+
 ## Cross road
 - [I want to start using Bank iD in my application](./docs/user_guide.md)
 - [I want to start developing this library](./docs/developer_guide.md)
