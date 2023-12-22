@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added `private sendRequest()` method to `Client` to abstract processing HTTP responses in central palce
+- Added more specific exceptions in various cases to avoid using only `Exception` class.
 - Added `traceId` into error responses from Bank iD and some success responses that are also traceable
 - Added information about available support by [Unnits.com](www.unnits.com)
 
