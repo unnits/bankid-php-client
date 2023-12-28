@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2023-12-28
+
 ### Added
 
 - Added `private sendRequest()` method to `Client` to abstract processing HTTP responses in central palce
