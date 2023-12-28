@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Unnits\BankId\Client as BankIdClient;
 use GuzzleHttp\Client as GuzzleClient;
 use Unnits\BankId\Enums\Scope;
-use Unnits\BankId\LogoutUri;
 
 /**
  * MUST match one of the Redirect URIs in BankId's developer portal
@@ -25,9 +24,21 @@ $client = new BankIdClient(
 $profile = null;
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+
 if ($path === parse_url($redirectUri, PHP_URL_PATH)) {
-    $code = $_GET['code'] ?? null;
-    $state = $_GET['state'] ?? null;
+    $error = $_GET['error'] ?? null;
+    $description = $_GET['error_description'] ?? null;
+
+    if ($error !== null) {
+        throw new Exception(sprintf(
+            'Failed redirecting user from Bank iD: (%s) %s',
+            $error,
+            $description
+        ));
+    }
+
+    $code = $_GET['code'] ?? '';
+    $state = $_GET['state'] ?? '';
 
     $token = $client->getToken($code);
     $profile = $client->getProfile($token);
@@ -49,7 +60,6 @@ $link = (string)$client->getAuthUri($state, scopes: [
     Scope::Verification,
     Scope::Name,
 ]);
-
 ?>
 
 <div class="get-profile">

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\Exceptions;
 
-use Exception;
-
-class TokenInfoException extends Exception
+class TokenInfoException extends BankIdException
 {
-    //
+    public static function message(): string
+    {
+        return 'Failed getting token info';
+    }
 }

@@ -86,6 +86,8 @@ $keyPath = __DIR__ . '/../storage/private-key.pem';
 $privateKey = JWKFactory::createFromKeyFile($keyPath);
 
 $response = $client->createRequestObject($ros, $privateKey);
+
+$traceId = $response->getTraceId();
 $requestUri = $response->requestUri;
 
 $uploadUri = $response->uploadUri;
@@ -120,6 +122,8 @@ try {
     <?php if ($authUri === null): ?>
         <p><?= $e->getMessage() ?></p>
     <?php else: ?>
+        <p>Trace ID: <?= $traceId ?? 'null' ?></p>
+
         <a class="login-button" href="<?= $authUri ?>">
             <img
                 alt="BankiD logo"
