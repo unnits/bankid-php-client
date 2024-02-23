@@ -410,9 +410,15 @@ class Client
         $keyEncryptionAlgorithm = new RSAOAEP256();
         $contentEncryptionAlgorithm = new A128CBCHS256();
 
+        // contentEncryptionAlgorithmManager has been deprecated
+        // as of web-token/jwt-library:3.3.0
+        // @see https://github.com/web-token/jwt-framework/blob/3.3.x/src/Library/Encryption/JWEBuilder.php#L58
         $jweBuilder = new JWEBuilder(
-            keyEncryptionAlgorithmManager: new AlgorithmManager([$keyEncryptionAlgorithm]),
-            contentEncryptionAlgorithmManager: new AlgorithmManager([$contentEncryptionAlgorithm]),
+            new AlgorithmManager([
+                $keyEncryptionAlgorithm,
+                $contentEncryptionAlgorithm
+            ]),
+            contentEncryptionAlgorithmManager: null,
             compressionManager: new CompressionMethodManager()
         );
 
