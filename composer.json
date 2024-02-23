@@ -39,14 +39,9 @@
   "require": {
     "php": "^8.1",
     "psr/http-client": "^1.0",
-    "web-token/jwt-signature": "^3.1",
-    "web-token/jwt-encryption": "^3.1",
-    "web-token/jwt-encryption-algorithm-rsa": "^3.1",
-    "web-token/jwt-encryption-algorithm-aescbc": "^3.1",
+    "web-token/jwt-framework":  "^3.3",
     "ext-openssl": "*",
-    "ext-bcmath": "*",
-    "web-token/jwt-signature-algorithm-rsa": "^3.1",
-    "web-token/jwt-key-mgmt": "^3.1"
+    "ext-bcmath": "*"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.10.7",
