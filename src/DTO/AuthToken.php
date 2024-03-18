@@ -31,7 +31,7 @@ class AuthToken
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<int|string, mixed> $data
      * @return self
      * @throws Exception
      */

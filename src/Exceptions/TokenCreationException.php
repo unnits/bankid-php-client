@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Unnits\BankId\Exceptions;
 
-use Exception;
-
-class TokenCreationException extends Exception
+class TokenCreationException extends BankIdException
 {
-    //
+    public static function message(): string
+    {
+        return 'Failed creating token';
+    }
 }

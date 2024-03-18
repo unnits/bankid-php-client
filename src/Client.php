@@ -18,6 +18,7 @@ use Jose\Component\Signature\Algorithm\RS256;
 use Jose\Component\Signature\JWSBuilder;
 use Jose\Component\Signature\Serializer\CompactSerializer as SignatureCompactSerializer;
 use JsonException;
+use Psr\Http\Message\RequestInterface;
 use RuntimeException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Client\ClientExceptionInterface;
@@ -34,10 +35,14 @@ use Unnits\BankId\Enums\ClientAssertionType;
 use Unnits\BankId\Enums\JsonWebKeyUsage;
 use Unnits\BankId\Enums\Scope;
 use Unnits\BankId\Enums\TokenType;
+use Unnits\BankId\Exceptions\BankIdException;
+use Unnits\BankId\Exceptions\GetProfileException;
+use Unnits\BankId\Exceptions\GetUserInfoException;
 use Unnits\BankId\Exceptions\LogoutException;
 use Unnits\BankId\Exceptions\RequestObjectCreationException;
 use Unnits\BankId\Exceptions\TokenCreationException;
 use Unnits\BankId\Exceptions\TokenInfoException;
+use Unnits\BankId\Http\BankIdResponse;
 use Unnits\BankId\OIDC\Configuration;
 
 class Client
@@ -85,64 +90,49 @@ class Client
      */
     public function getToken(string $code): AuthToken
     {
-        $request = new Request(
-            method: 'POST',
-            uri: sprintf('%s/token', $this->baseUri),
-            headers: [
-                'Content-Type' => 'application/x-www-form-urlencoded'
-            ],
-            body: http_build_query([
-                'grant_type' => 'authorization_code',
-                'code' => $code,
-                'redirect_uri' => $this->redirectUri,
-                'client_id' => $this->clientId,
-                'client_secret' => $this->clientSecret,
-            ])
-        );
-
-        $response = $this->httpClient->sendRequest($request);
-
-        $content = Utils::jsonDecode(
-            $response->getBody()->getContents(),
-            assoc: true
-        );
-
-        assert(is_array($content));
-
-        if ($response->getStatusCode() !== 200) {
-            throw new TokenCreationException(sprintf(
-                'Failed creating new token: (%s) %s',
-                $content['error'],
-                $content['error_description'],
+        try {
+            $response = $this->sendRequest(new Request(
+                method: 'POST',
+                uri: sprintf('%s/token', $this->baseUri),
+                headers: [
+                    'Content-Type' => 'application/x-www-form-urlencoded'
+                ],
+                body: http_build_query([
+                    'grant_type' => 'authorization_code',
+                    'code' => $code,
+                    'redirect_uri' => $this->redirectUri,
+                    'client_id' => $this->clientId,
+                    'client_secret' => $this->clientSecret,
+                ])
             ));
-        }
 
-        return AuthToken::create($content);
+            return AuthToken::create($response->getBody()->data);
+        } catch (BankIdException $e) {
+            throw TokenCreationException::create($e);
+        }
     }
 
     /**
      * @param AuthToken $token
      * @return Profile
      * @throws ClientExceptionInterface
+     * @throws GetProfileException
      */
     public function getProfile(AuthToken $token): Profile
     {
-        $request = new Request(
-            method: 'GET',
-            uri: sprintf('%s/profile', $this->baseUri),
-            headers: [
-                'Authorization' => sprintf('Bearer %s', $token->value)
-            ]
-        );
+        try {
+            $response = $this->sendRequest(new Request(
+                method: 'GET',
+                uri: sprintf('%s/profile', $this->baseUri),
+                headers: [
+                    'Authorization' => sprintf('Bearer %s', $token->value)
+                ]
+            ));
 
-        $response = $this->httpClient->sendRequest($request);
-
-        $content = json_decode(
-            $response->getBody()->getContents(),
-            associative: true
-        );
-
-        return Profile::create($content);
+            return Profile::create($response->getBody()->data);
+        } catch (BankIdException $e) {
+            throw GetProfileException::create($e);
+        }
     }
 
     /**
@@ -150,6 +140,8 @@ class Client
      * @param JWK $applicationSignatureKey
      * @return RequestObjectCreationResponse
      * @throws ClientExceptionInterface
+     * @throws RequestObjectCreationException
+     * @throws JsonException
      * @throws Exception
      */
     public function createRequestObject(
@@ -172,32 +164,23 @@ class Client
         $signedContent = $this->signUsingJsonWebSignature($body, $applicationSignatureKey);
         $encryptedContent = $this->encryptUsingJsonWebEncryption($signedContent, $encryptionKey);
 
-        $request = new Request(
-            method: 'POST',
-            uri: sprintf('%s/ros', $this->baseUri),
-            headers: [
-                'Content-Type' => 'application/jwe'
-            ],
-            body: $encryptedContent
-        );
-
-        $response = $this->httpClient->sendRequest($request);
-        $code = $response->getStatusCode();
-
-        if ($code !== 200) {
-            throw new RequestObjectCreationException(sprintf(
-                'ROS creation request failed with status %d and message %s',
-                $code,
-                $response->getBody(),
+        try {
+            $response = $this->sendRequest(new Request(
+                method: 'POST',
+                uri: sprintf('%s/ros', $this->baseUri),
+                headers: [
+                    'Content-Type' => 'application/jwe'
+                ],
+                body: $encryptedContent
             ));
+
+            return RequestObjectCreationResponse::create(
+                $response->getBody()->data,
+                $response->getTraceId(),
+            );
+        } catch (BankIdException $e) {
+            throw RequestObjectCreationException::create($e);
         }
-
-        $content = json_decode(
-            $response->getBody()->getContents(),
-            associative: true
-        );
-
-        return RequestObjectCreationResponse::create($content);
     }
 
     /**
@@ -284,35 +267,20 @@ class Client
             }
         }
 
-        $request = new Request(
-            method: 'POST',
-            uri: sprintf('%s/token-info', $this->baseUri),
-            headers: [
-                'Content-Type' => 'application/x-www-form-urlencoded'
-            ],
-            body: http_build_query($body)
-        );
-
-        $response = $this->httpClient->sendRequest($request);
-
-        $content = Utils::jsonDecode(
-            $response->getBody()->getContents(),
-            assoc: true
-        );
-
-        assert(is_array($content));
-
-        if ($response->getStatusCode() !== 200) {
-            throw new TokenInfoException(sprintf(
-                'Failed getting token info: (%d %s) %s. Trace id: %s',
-                $response->getStatusCode(),
-                $content['error'],
-                $content['error_description'],
-                $response->getHeaderLine('traceId')
+        try {
+            $response = $this->sendRequest(new Request(
+                method: 'POST',
+                uri: sprintf('%s/token-info', $this->baseUri),
+                headers: [
+                    'Content-Type' => 'application/x-www-form-urlencoded'
+                ],
+                body: http_build_query($body)
             ));
-        }
 
-        return TokenInfo::create($content);
+            return TokenInfo::create($response->getBody()->data);
+        } catch (BankIdException $e) {
+            throw TokenInfoException::create($e);
+        }
     }
 
     /**
@@ -327,28 +295,13 @@ class Client
     {
         $uri = $this->getLogoutUri($idTokenHint, $redirectUri, $state);
 
-        $request = new Request(
-            method: 'POST',
-            uri: (string)$uri
-        );
-
-        $response = $this->httpClient->sendRequest($request);
-
-        $content = Utils::jsonDecode(
-            $response->getBody()->getContents(),
-            assoc: true
-        );
-
-        assert(is_array($content));
-
-        if ($response->getStatusCode() !== 200) {
-            throw new LogoutException(sprintf(
-                'Failed logging user out: (%d %s) %s. Trace id: %s',
-                $response->getStatusCode(),
-                $content['error'],
-                $content['error_description'],
-                $response->getHeaderLine('traceId')
+        try {
+            $this->sendRequest(new Request(
+                method: 'POST',
+                uri: (string)$uri
             ));
+        } catch (BankIdException $e) {
+            throw LogoutException::create($e);
         }
     }
 
@@ -369,38 +322,23 @@ class Client
      * @param AuthToken $token
      * @return UserInfo
      * @throws ClientExceptionInterface
-     * @throws LogoutException
+     * @throws GetUserInfoException
      */
     public function getUserInfo(AuthToken $token): UserInfo
     {
-        $request = new Request(
-            method: 'GET',
-            uri: sprintf('%s/userinfo', $this->baseUri),
-            headers: [
-                'Authorization' => sprintf('Bearer %s', $token->value)
-            ]
-        );
-
-        $response = $this->httpClient->sendRequest($request);
-
-        $content = Utils::jsonDecode(
-            $response->getBody()->getContents(),
-            assoc: true
-        );
-
-        assert(is_array($content));
-
-        if ($response->getStatusCode() !== 200) {
-            throw new LogoutException(sprintf(
-                'Failed logging user out: (%d %s) %s. Trace id: %s',
-                $response->getStatusCode(),
-                $content['error'],
-                $content['error_description'],
-                $response->getHeaderLine('traceId')
+        try {
+            $response = $this->sendRequest(new Request(
+                method: 'GET',
+                uri: sprintf('%s/userinfo', $this->baseUri),
+                headers: [
+                    'Authorization' => sprintf('Bearer %s', $token->value)
+                ]
             ));
-        }
 
-        return UserInfo::create($content);
+            return UserInfo::create($response->getBody()->data);
+        } catch (BankIdException $e) {
+            throw GetUserInfoException::create($e);
+        }
     }
 
     /**
@@ -472,9 +410,15 @@ class Client
         $keyEncryptionAlgorithm = new RSAOAEP256();
         $contentEncryptionAlgorithm = new A128CBCHS256();
 
+        // contentEncryptionAlgorithmManager has been deprecated
+        // as of web-token/jwt-library:3.3.0
+        // @see https://github.com/web-token/jwt-framework/blob/3.3.x/src/Library/Encryption/JWEBuilder.php#L58
         $jweBuilder = new JWEBuilder(
-            keyEncryptionAlgorithmManager: new AlgorithmManager([$keyEncryptionAlgorithm]),
-            contentEncryptionAlgorithmManager: new AlgorithmManager([$contentEncryptionAlgorithm]),
+            new AlgorithmManager([
+                $keyEncryptionAlgorithm,
+                $contentEncryptionAlgorithm
+            ]),
+            contentEncryptionAlgorithmManager: null,
             compressionManager: new CompressionMethodManager()
         );
 
@@ -490,5 +434,32 @@ class Client
 
         return (new CompactSerializer())
             ->serialize($jwe);
+    }
+
+    /**
+     * @param RequestInterface $request
+     * @return BankIdResponse
+     * @throws BankIdException
+     * @throws ClientExceptionInterface
+     */
+    private function sendRequest(RequestInterface $request): BankIdResponse
+    {
+        $response = new BankIdResponse(
+            $this->httpClient->sendRequest($request)
+        );
+
+        $code = $response->originalResponse->getStatusCode();
+        $body = $response->getBody();
+
+        if ($code !== 200) {
+            throw new BankIdException(
+                traceId: $response->getTraceId(),
+                statusCode: $code,
+                error: $body->stringOrNull('error'),
+                description: $body->stringOrNull('error_description'),
+            );
+        }
+
+        return $response;
     }
 }

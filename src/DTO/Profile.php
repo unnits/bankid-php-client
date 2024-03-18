@@ -66,7 +66,7 @@ class Profile
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array<int|string, mixed> $data
      * @return self
      */
     public static function create(array $data): self

@@ -11,16 +11,6 @@ parameters:
 			path: src/Client.php
 
 		-
-			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\Profile\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
-			count: 1
-			path: src/Client.php
-
-		-
-			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\RequestObjectCreationResponse\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
-			count: 1
-			path: src/Client.php
-
-		-
 			message: "#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#"
 			count: 1
 			path: src/Client.php

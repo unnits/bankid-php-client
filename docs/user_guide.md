@@ -9,8 +9,7 @@ Even though some people may be both users and developers with respect to the lib
 
 ## Installation
 
-The library is currently not public. So you need to set up private repository to
-`git@gitlab.litea.dev:unnits/unniparts/bankid-client.git`
+The simpliest way to install this library is via composer:
 
 ```php
 composer require unnits/bankid-client
