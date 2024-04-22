@@ -43,7 +43,7 @@ assert(is_string($documentHash));
 
 // 1. first we create new request object providing document's metadata
 
-// Must match the .pdf's creation date
+// Must match the .pdf's creation date (in UTC)
 // (not the file itself, but created_at metadata in the pdf file)
 $documentCreatedAt = new DateTime($_ENV['DEMO_DOCUMENT_CREATED_AT']);
 
