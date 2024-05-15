@@ -6,7 +6,7 @@
 
 ## Support
 
-We ([Unnits](www.unnits.com)) as official Bank iD maintainer of the PHP client library offer paid consultation on the library integration.
+We ([Unnits](https://www.unnits.com)) as official Bank iD maintainer of the PHP client library offer paid consultation on the library integration.
 
 We try our best to describe different use-cases, but in case you still struggle with integrating the library into your application let us know at hello@unnits.com and we will be happy to help.
 
