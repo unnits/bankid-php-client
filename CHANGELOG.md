@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2024-06-25
+
+### Changed
+- Update composer packages
+- Regenerated PHPStan's baseline file
+
+### Fixed
+- Fixed values for backed enum `Unnits\BankId\Enums\Scope` according to Bank iD docs
+
 ## [0.5.1] - 2024-02-23
 
 ### Changed
