@@ -54,7 +54,7 @@ class UserInfo
             : null;
 
         $updatedAt = array_key_exists('updated_at', $data)
-            ? (bool)$data['updated_at']
+            ? (string)$data['updated_at']
             : null;
 
         return new self(
