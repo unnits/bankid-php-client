@@ -12,21 +12,22 @@ enum Scope: string
     case OfflineAccess = 'offline_access';
     case Address = 'profile.addresses';
     case BirthDate = 'profile.birthdate';
-    case BirthNumber = 'profile.birthNumber';
+    case BirthNumber = 'profile.birthnumber';
     case BirthplaceNationality = 'profile.birthplaceNationality';
     case Email = 'profile.email';
     case Gender = 'profile.gender';
-    case IdCards = 'profile.idCards';
-    case LegalStatus = 'profile.legalStatus';
+    case IdCards = 'profile.idcards';
+    case LegalStatus = 'profile.legalstatus';
     case Locale = 'profile.locale';
-    case MaritalStatus = 'profile.maritalStatus';
+    case MaritalStatus = 'profile.maritalstatus';
     case Name = 'profile.name';
     case PaymentAccounts = 'profile.paymentAccounts';
-    case PhoneNumber = 'profile.phoneNumber';
+    case PhoneNumber = 'profile.phonenumber';
     case Titles = 'profile.titles';
-    case UpdatedAt = 'profile.updatedAt';
-    case ZoneInfo = 'profile.zoneInfo';
+    case UpdatedAt = 'profile.updatedat';
+    case ZoneInfo = 'profile.zoneinfo';
     case Verification = 'profile.verification';
+    case NotificationClaimsUpdated = 'notification.claims_updated';
 
     /**
      * @param Stringable|string $scope
