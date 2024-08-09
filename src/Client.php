@@ -375,6 +375,11 @@ class Client
         return Configuration::create($content);
     }
 
+    public function getClientId(): string
+    {
+        return $this->clientId;
+    }
+
     /**
      * @see https://datatracker.ietf.org/doc/html/rfc7515
      * @param string $data
