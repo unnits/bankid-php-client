@@ -3,6 +3,7 @@
   "description": "Client for communication with Bank iD services",
   "type": "library",
   "minimum-stability": "dev",
+  "license": "MIT",
   "prefer-stable": true,
   "authors": [
     {
