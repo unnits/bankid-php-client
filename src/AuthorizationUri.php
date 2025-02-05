@@ -18,6 +18,7 @@ final class AuthorizationUri implements Stringable
      * @param string $clientId
      * @param string $redirectUri
      * @param string $state
+     * @param string $nonce
      * @param string|null $bankId
      * @param ResponseType $responseType
      * @param CodeChallengeMethod $codeChallengeMethod
@@ -30,6 +31,7 @@ final class AuthorizationUri implements Stringable
         private readonly string $clientId,
         private readonly string $redirectUri,
         private readonly string $state,
+        private readonly string $nonce,
         private readonly ?string $bankId = null,
         private readonly ResponseType $responseType = ResponseType::Code,
         private readonly CodeChallengeMethod $codeChallengeMethod = CodeChallengeMethod::Plain,
@@ -58,6 +60,7 @@ final class AuthorizationUri implements Stringable
             QueryParam::ClientId->value => $this->clientId,
             QueryParam::RedirectUri->value => $this->redirectUri,
             QueryParam::RequestUri->value => $this->requestUri,
+            QueryParam::Nonce->value => $this->nonce,                       
         ]);
 
         return sprintf(
