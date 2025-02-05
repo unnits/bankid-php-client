@@ -16,4 +16,5 @@ enum AuthorizationUriQueryParameter: string
     case ClientId = 'client_id';
     case RedirectUri = 'redirect_uri';
     case RequestUri = 'request_uri';
+    case Nonce = 'nonce';
 }
