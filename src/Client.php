@@ -59,6 +59,7 @@ class Client
 
     /**
      * @param string $state
+     * @param string $nonce
      * @param string|null $bankId
      * @param string|null $requestUri
      * @param Scope[] $scopes
@@ -66,6 +67,7 @@ class Client
      */
     public function getAuthUri(
         string $state,
+        string $nonce,
         ?string $bankId = null,
         ?string $requestUri = null,
         array $scopes = [Scope::OpenId]
@@ -75,6 +77,7 @@ class Client
             clientId: $this->clientId,
             redirectUri: $this->redirectUri,
             state: $state,
+            nonce: $nonce,
             bankId: $bankId,
             scopes: $scopes,
             requestUri: $requestUri,
