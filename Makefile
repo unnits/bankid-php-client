@@ -124,5 +124,5 @@ security-check:
 
 phpunit: up
 	@echo "Running unit tests"
-	./cmd.sh dc exec -u $(UID) php-cli composer test
+	./cmd.sh dc exec -u $(UID) php-cli composer phpunit
 
