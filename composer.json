@@ -40,8 +40,7 @@
     "php": "^8.1",
     "psr/http-client": "^1.0",
     "web-token/jwt-framework":  "^3.3",
-    "ext-openssl": "*",
-    "ext-bcmath": "*"
+    "ext-openssl": "*"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.10.7",

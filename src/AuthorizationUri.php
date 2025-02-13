@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Unnits\BankId;
 
 use Stringable;
+use Symfony\Component\Uid\Uuid;
 use Unnits\BankId\Enums\AcrValue;
 use Unnits\BankId\Enums\AuthorizationUriQueryParameter as QueryParam;
 use Unnits\BankId\Enums\CodeChallengeMethod;
@@ -18,6 +19,7 @@ final class AuthorizationUri implements Stringable
      * @param string $clientId
      * @param string $redirectUri
      * @param string $state
+     * @param string|null $nonce
      * @param string|null $bankId
      * @param ResponseType $responseType
      * @param CodeChallengeMethod $codeChallengeMethod
@@ -36,6 +38,7 @@ final class AuthorizationUri implements Stringable
         private readonly AcrValue $acrValue = AcrValue::LOA2,
         private readonly array $scopes = [Scope::OpenId],
         private readonly ?string $requestUri = null,
+        private readonly ?string $nonce = null,
     ) {
         //
     }
@@ -58,6 +61,7 @@ final class AuthorizationUri implements Stringable
             QueryParam::ClientId->value => $this->clientId,
             QueryParam::RedirectUri->value => $this->redirectUri,
             QueryParam::RequestUri->value => $this->requestUri,
+            QueryParam::Nonce->value => $this->nonce,
         ]);
 
         return sprintf(
