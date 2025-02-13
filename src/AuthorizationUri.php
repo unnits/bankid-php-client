@@ -57,7 +57,7 @@ final class AuthorizationUri implements Stringable
             QueryParam::ResponseType->value => $this->responseType->value,
             QueryParam::AcrValue->value => $this->acrValue->value,
             QueryParam::State->value => $this->state,
-            QueryParam::Nonce->value => $this->nonce !== null ? $this->nonce : Uuid::v4(),
+            QueryParam::Nonce->value => $this->nonce ?? Uuid::v4(),
             QueryParam::BankId->value => $this->bankId,
             QueryParam::ClientId->value => $this->clientId,
             QueryParam::RedirectUri->value => $this->redirectUri,

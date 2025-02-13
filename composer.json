@@ -42,7 +42,7 @@
     "web-token/jwt-framework":  "^3.3",
     "ext-openssl": "*",
     "ext-bcmath": "*",
-    "symfony/uid": "^6.4"
+    "symfony/uid": "^7.0 | ^6.0"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.10.7",
