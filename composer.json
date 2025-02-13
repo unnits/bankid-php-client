@@ -41,7 +41,8 @@
     "psr/http-client": "^1.0",
     "web-token/jwt-framework":  "^3.3",
     "ext-openssl": "*",
-    "ext-bcmath": "*"
+    "ext-bcmath": "*",
+    "symfony/uid": "^6.4"
   },
   "require-dev": {
     "phpstan/phpstan": "^1.10.7",

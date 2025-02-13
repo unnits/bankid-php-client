@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Unnits\BankId;
 
 use Stringable;
+use Symfony\Component\Uid\Uuid;
 use Unnits\BankId\Enums\AcrValue;
 use Unnits\BankId\Enums\AuthorizationUriQueryParameter as QueryParam;
 use Unnits\BankId\Enums\CodeChallengeMethod;
@@ -18,7 +19,7 @@ final class AuthorizationUri implements Stringable
      * @param string $clientId
      * @param string $redirectUri
      * @param string $state
-     * @param string $nonce
+     * @param string|null $nonce
      * @param string|null $bankId
      * @param ResponseType $responseType
      * @param CodeChallengeMethod $codeChallengeMethod
@@ -31,7 +32,7 @@ final class AuthorizationUri implements Stringable
         private readonly string $clientId,
         private readonly string $redirectUri,
         private readonly string $state,
-        private readonly string $nonce,
+        private readonly ?string $nonce = null,
         private readonly ?string $bankId = null,
         private readonly ResponseType $responseType = ResponseType::Code,
         private readonly CodeChallengeMethod $codeChallengeMethod = CodeChallengeMethod::Plain,
@@ -56,11 +57,11 @@ final class AuthorizationUri implements Stringable
             QueryParam::ResponseType->value => $this->responseType->value,
             QueryParam::AcrValue->value => $this->acrValue->value,
             QueryParam::State->value => $this->state,
+            QueryParam::Nonce->value => $this->nonce !== null ? $this->nonce : Uuid::v4(),
             QueryParam::BankId->value => $this->bankId,
             QueryParam::ClientId->value => $this->clientId,
             QueryParam::RedirectUri->value => $this->redirectUri,
             QueryParam::RequestUri->value => $this->requestUri,
-            QueryParam::Nonce->value => $this->nonce,                       
         ]);
 
         return sprintf(
