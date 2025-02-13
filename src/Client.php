@@ -59,28 +59,28 @@ class Client
 
     /**
      * @param string $state
-     * @param string|null $nonce
      * @param string|null $bankId
      * @param string|null $requestUri
      * @param Scope[] $scopes
+     * @param string|null $nonce
      * @return AuthorizationUri
      */
     public function getAuthUri(
         string $state,
-        ?string $nonce = null,
         ?string $bankId = null,
         ?string $requestUri = null,
-        array $scopes = [Scope::OpenId]
+        array $scopes = [Scope::OpenId],
+        ?string $nonce = null,
     ): AuthorizationUri {
         return new AuthorizationUri(
             baseUri: $this->baseUri,
             clientId: $this->clientId,
             redirectUri: $this->redirectUri,
             state: $state,
-            nonce: $nonce,
             bankId: $bankId,
             scopes: $scopes,
             requestUri: $requestUri,
+            nonce: $nonce,
         );
     }
 

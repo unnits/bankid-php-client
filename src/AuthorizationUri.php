@@ -32,13 +32,13 @@ final class AuthorizationUri implements Stringable
         private readonly string $clientId,
         private readonly string $redirectUri,
         private readonly string $state,
-        private readonly ?string $nonce = null,
         private readonly ?string $bankId = null,
         private readonly ResponseType $responseType = ResponseType::Code,
         private readonly CodeChallengeMethod $codeChallengeMethod = CodeChallengeMethod::Plain,
         private readonly AcrValue $acrValue = AcrValue::LOA2,
         private readonly array $scopes = [Scope::OpenId],
         private readonly ?string $requestUri = null,
+        private readonly ?string $nonce = null,
     ) {
         //
     }
@@ -57,11 +57,11 @@ final class AuthorizationUri implements Stringable
             QueryParam::ResponseType->value => $this->responseType->value,
             QueryParam::AcrValue->value => $this->acrValue->value,
             QueryParam::State->value => $this->state,
-            QueryParam::Nonce->value => $this->nonce ?? Uuid::v4(),
             QueryParam::BankId->value => $this->bankId,
             QueryParam::ClientId->value => $this->clientId,
             QueryParam::RedirectUri->value => $this->redirectUri,
             QueryParam::RequestUri->value => $this->requestUri,
+            QueryParam::Nonce->value => $this->nonce,
         ]);
 
         return sprintf(
