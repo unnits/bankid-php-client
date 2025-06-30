@@ -7,9 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2025-06-30
+
 ### Changed
 
 - Made signature algorithm configurable in `createRequestObject` method
+
+## [0.8.0] - 2025-02-13
+
+### Added
+
+- Added support for specifying nonce parameter in getAuthUri() method.
 
 ## [0.7.0] - 2024-08-09
 
