@@ -15,6 +15,7 @@ use Jose\Component\Encryption\Compression\CompressionMethodManager;
 use Jose\Component\Encryption\JWEBuilder;
 use Jose\Component\Encryption\Serializer\CompactSerializer;
 use Jose\Component\Signature\Algorithm\RS256;
+use Jose\Component\Signature\Algorithm\SignatureAlgorithm;
 use Jose\Component\Signature\JWSBuilder;
 use Jose\Component\Signature\Serializer\CompactSerializer as SignatureCompactSerializer;
 use JsonException;
@@ -141,6 +142,7 @@ class Client
     /**
      * @param RequestObject $requestObject
      * @param JWK $applicationSignatureKey
+     * @param SignatureAlgorithm $signatureAlgorithm
      * @return RequestObjectCreationResponse
      * @throws ClientExceptionInterface
      * @throws RequestObjectCreationException
@@ -149,7 +151,8 @@ class Client
      */
     public function createRequestObject(
         RequestObject $requestObject,
-        JWK $applicationSignatureKey
+        JWK $applicationSignatureKey,
+        SignatureAlgorithm $signatureAlgorithm = new RS256(),
     ): RequestObjectCreationResponse {
         // 1. podepsat JSON vzniklý z $requestObject
         // 2. zašifrovat výsledný JSON klíčem z BankId
@@ -164,7 +167,7 @@ class Client
             throw new RuntimeException('Could not find any BankId JWKs to encrypt content with.');
         }
 
-        $signedContent = $this->signUsingJsonWebSignature($body, $applicationSignatureKey);
+        $signedContent = $this->signUsingJsonWebSignature($body, $applicationSignatureKey, $signatureAlgorithm);
         $encryptedContent = $this->encryptUsingJsonWebEncryption($signedContent, $encryptionKey);
 
         try {
@@ -387,12 +390,11 @@ class Client
      * @see https://datatracker.ietf.org/doc/html/rfc7515
      * @param string $data
      * @param JWK $privateKey
+     * @param SignatureAlgorithm $algorithm
      * @return string
      */
-    private function signUsingJsonWebSignature(string $data, JWK $privateKey): string
+    private function signUsingJsonWebSignature(string $data, JWK $privateKey, SignatureAlgorithm $algorithm): string
     {
-        $algorithm = new RS256();
-
         $jwsBuilder = new JWSBuilder(new AlgorithmManager([
             $algorithm
         ]));
