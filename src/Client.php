@@ -218,7 +218,7 @@ class Client
     {
         $request = new Request(
             method: 'GET',
-            uri: 'https://oidc.bankid.cz/api/v1/banks',
+            uri: sprintf('%s/api/v1/banks', $this->baseUri)
         );
 
         $response = $this->httpClient->sendRequest($request);
