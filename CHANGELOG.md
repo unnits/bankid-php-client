@@ -8,7 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
- 
+
+- Fixed UserInfo claim keys to use correct underscore format (given_name, family_name, middle_name)
+
+## [0.9.1] - 2025-07-02
+
+### Fixed
+
 - Fixed banks API endpoint to use the configured baseUri instead of hardcoded URL
 
 ## [0.9.0] - 2025-06-30
