@@ -1,4 +1,4 @@
-name: PHP
+name: Tests
 
 on:
   push:
@@ -10,22 +10,36 @@ permissions:
   contents: read
 
 jobs:
-  install:
-    runs-on: ubuntu-latest
+  tests:
+    strategy:
+      matrix:
+        php-version:
+          - "8.1"
+          - "8.2"
+          - "8.3"
+          - "8.4"
+          - "8.5"
+        operating-system: [ubuntu-latest]
+    runs-on: ${{ matrix.operating-system }}
     steps:
     - uses: actions/checkout@v4
+
+    - name: "Install PHP"
+      uses: "shivammathur/setup-php@v2"
+      with:
+        php-version: "${{ matrix.php-version }}"
 
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-
     - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
+      uses: "ramsey/composer-install@v3"
+
+    - name: Run PHPStan
+      run: composer run-script phpstan
+
+    - name: Run PHP Code Sniffer
+      run: composer run-script phpcs
+
+    - name: Run unit tests
+      run: composer run-script phpunit
