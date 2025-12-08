@@ -12,6 +12,7 @@ permissions:
 jobs:
   tests:
     strategy:
+      fail-fast: false
       matrix:
         php-version:
           - "8.1"
