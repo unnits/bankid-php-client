@@ -28,6 +28,8 @@ enum Scope: string
     case ZoneInfo = 'profile.zoneinfo';
     case Verification = 'profile.verification';
     case NotificationClaimsUpdated = 'notification.claims_updated';
+    case SignQualified = 'sign.qualified';
+    case SignOfficiallyCertified = 'sign.officially_certified';
 
     /**
      * @param Stringable|string $scope
