@@ -2,10 +2,9 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
-    level: max
+    level: 9
     paths:
         - src
     tmpDir: tmp/phpstan
     ignoreErrors: []
     excludePaths: []
-    checkMissingIterableValueType: true
