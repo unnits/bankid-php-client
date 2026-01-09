@@ -19,7 +19,7 @@ class SignArea implements JsonSerializable
     }
 
     /**
-     * @return array{'x-coordinate': int, 'y-coordinate': int, 'x-dist': int, 'y-dist': int}
+     * @return array{'x-coordinate': int, 'y-coordinate': int, 'x-dist': int, 'y-dist': int, 'page': int}
      */
     public function jsonSerialize(): array
     {
@@ -33,7 +33,7 @@ class SignArea implements JsonSerializable
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @param array{'x-coordinate': int, 'y-coordinate': int, 'x-dist': int, 'y-dist': int, 'page': int} $data
      * @return self
      */
     public static function create(array $data): self

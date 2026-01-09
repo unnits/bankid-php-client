@@ -256,31 +256,6 @@ parameters:
 			path: src/DTO/RequestObjectCreationResponse.php
 
 		-
-			message: "#^Parameter \\#1 \\$x of class Unnits\\\\BankId\\\\DTO\\\\SignArea constructor expects int, mixed given\\.$#"
-			count: 1
-			path: src/DTO/SignArea.php
-
-		-
-			message: "#^Parameter \\#2 \\$y of class Unnits\\\\BankId\\\\DTO\\\\SignArea constructor expects int, mixed given\\.$#"
-			count: 1
-			path: src/DTO/SignArea.php
-
-		-
-			message: "#^Parameter \\#3 \\$width of class Unnits\\\\BankId\\\\DTO\\\\SignArea constructor expects int, mixed given\\.$#"
-			count: 1
-			path: src/DTO/SignArea.php
-
-		-
-			message: "#^Parameter \\#4 \\$height of class Unnits\\\\BankId\\\\DTO\\\\SignArea constructor expects int, mixed given\\.$#"
-			count: 1
-			path: src/DTO/SignArea.php
-
-		-
-			message: "#^Parameter \\#5 \\$page of class Unnits\\\\BankId\\\\DTO\\\\SignArea constructor expects int, mixed given\\.$#"
-			count: 1
-			path: src/DTO/SignArea.php
-
-		-
 			message: "#^Parameter \\#1 \\$data of static method Unnits\\\\BankId\\\\DTO\\\\SignObjectField\\:\\:create\\(\\) expects array\\<string, mixed\\>, mixed given\\.$#"
 			count: 1
 			path: src/DTO/SignObject.php
@@ -609,3 +584,33 @@ parameters:
 			message: "#^Parameter \\$verificationEndpoint of class Unnits\\\\BankId\\\\OIDC\\\\Configuration constructor expects string\\|null, mixed given\\.$#"
 			count: 1
 			path: src/OIDC/Configuration.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Unnits\\BankId\\DTO\\SignArea\:\:create\(\) expects array\{x\-coordinate\: int, y\-coordinate\: int, x\-dist\: int, y\-dist\: int, page\: int\}, array\<mixed, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DTO/DocumentObject.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Unnits\\BankId\\DTO\\DocumentObject\:\:create\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DTO/DocumentObjects.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Unnits\\BankId\\DTO\\DocumentObject\:\:create\(\) expects array\<string, mixed\>, array\<mixed, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DTO/StructuredScope.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Unnits\\BankId\\DTO\\DocumentObjects\:\:create\(\) expects array\<string, mixed\>, array\<mixed, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DTO/StructuredScope.php
+
+		-
+			message: '#^Parameter \#1 \$data of static method Unnits\\BankId\\DTO\\SignObject\:\:create\(\) expects array\<string, mixed\>, array\<mixed, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DTO/StructuredScope.php
