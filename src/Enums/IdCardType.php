@@ -14,5 +14,7 @@ enum IdCardType: string
     case ResidentialLabel = 'ps';
     case BookWithResidencePermit = 'ix';
     case TemporaryResidence = 'ie';
+    case IdWithoutMachineReadableZone = 'op';
+    case PassportWithoutMachineReadableZone = 'ca';
     case Unknown = 'unknown';
 }
