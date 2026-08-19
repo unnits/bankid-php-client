@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added `SignQualified` and `SignOfficiallyCertified` scopes to `Scope` enum
+- Added `IdWithoutMachineReadableZone` (`op`) and `PassportWithoutMachineReadableZone` (`ca`) cases to `IdCardType` enum
 
 ### Fixed
 
